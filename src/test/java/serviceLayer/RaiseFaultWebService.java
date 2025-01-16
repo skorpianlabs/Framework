@@ -13,35 +13,63 @@ public class RaiseFaultWebService extends BaseService {
         setupPageFactory();
 
     }
+    String description;
     WebServices webServices = new WebServices();
 
     public void raiseAFaultFromATurn(DataTable dataTable) throws InterruptedException {
 
-        webServices.routeToTurnDetailsPage(dataTable);
-        pageObjectFactory.getRaiseFaultService().clickButtonRaiseFault();
-        pageObjectFactory.getRaiseFaultService().clickButtonRelativeToLabelSystem();
-        pageObjectFactory.getRaiseFaultService().captureSelectedValueSystem();
-        pageObjectFactory.getRaiseFaultService().clickButtonRelativeToFaultSource();
-        pageObjectFactory.getRaiseFaultService().captureSelectedValueFaultSource();
-        pageObjectFactory.getRaiseFaultService(). enterDescription("DESC01");
-        pageObjectFactory.getRaiseFaultService().clickButtonRelativeToFaultSeverity();
-        pageObjectFactory.getRaiseFaultService().captureSelectedValueFaultSeverity();
-        pageObjectFactory.getRaiseFaultService().clickButtonOK();
+        webServices.routeToMyAircraftTurnsPage(dataTable);
+        webPageObjectFactory.getRaiseFaultService().clickButtonRaiseFault();
+        webPageObjectFactory.getRaiseFaultService().clickButtonRelativeToLabelSystem();
+        webPageObjectFactory.getRaiseFaultService().captureSelectedValueSystem();
+        webPageObjectFactory.getRaiseFaultService().clickButtonRelativeToFaultSource();
+        webPageObjectFactory.getRaiseFaultService().captureSelectedValueFaultSource();
+        webPageObjectFactory.getRaiseFaultService(). enterDescription("DESC01");
+        webPageObjectFactory.getRaiseFaultService().clickButtonRelativeToFaultSeverity();
+        webPageObjectFactory.getRaiseFaultService().captureSelectedValueFaultSeverity();
+        webPageObjectFactory.getRaiseFaultService().clickButtonOK();
+        Thread.sleep(2000);
     }
+
+    public void raiseAFaultFromLobby(DataTable dataTable) throws InterruptedException {
+
+        webServices.routeToTechnicianLobbyPage(dataTable);
+        webPageObjectFactory.getTechnicianLobbyPagePageService().clickRaiseFault();
+        webPageObjectFactory.getRaiseFaultService().clickAircraftInput();
+        webPageObjectFactory.getRaiseFaultService().clickIFSADText();
+        webPageObjectFactory.getRaiseFaultService().clickButtonRelativeToLabelSystem();
+        webPageObjectFactory.getRaiseFaultService().captureSelectedValueSystem();
+        webPageObjectFactory.getRaiseFaultService().clickButtonRelativeToFaultSource();
+        webPageObjectFactory.getRaiseFaultService().captureSelectedValueFaultSource();
+        webPageObjectFactory.getRaiseFaultService(). enterDescription("DESC01");
+        webPageObjectFactory.getRaiseFaultService().clickButtonRelativeToFaultSeverity();
+        webPageObjectFactory.getRaiseFaultService().captureSelectedValueFaultSeverity();
+        webPageObjectFactory.getRaiseFaultService().clickButtonOK();
+        Thread.sleep(2000);
+    }
+
     public void  raiseAFault(DataTable dataTable) throws InterruptedException {
 
         List<Map<String, String>> data = dataTable.asMaps(String.class, String.class);
-        Map<String, String> mapValues = data.get(0);
-        String page = mapValues.get("page");
+        for (Map<String, String> row : data) {
+            String page = row.get("page");
 
-        if (page.equals("turn")) {
-            raiseAFaultFromATurn(dataTable);
+            if (page.equals("turn")) {
+                raiseAFaultFromATurn(dataTable);
+            }
+            if (page.equals("lobby")) {
+                raiseAFaultFromLobby(dataTable) ;
+            }
         }
-        if (page.equals("lobby")) {
-            // raiseAFaultFromLobby() ;
-        }
 
+    }
 
+    public String assertRaisedFaultFromTurn(){
+
+        webServices.routeToTaskDetailsPage();
+        webServices.putTaskDetailsIntoAMap();
+        description =  webServices.getTaskDetailsFromMap();
+        return description;
     }
 
 }

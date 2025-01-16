@@ -12,6 +12,8 @@ public class RaiseFault  {
     private WebDriver driver;
     private  By SystemButton = By.xpath("By.xpath(//label[text()='System']/parent::*//button");
     private  By Systemvalue = By.xpath("//span[text()='INTRODUCTION']");
+    private By aircraftInputField = By.xpath("//label[@title='Aircraft']/following::button//i");
+    private By ifsadTextSpan = By.xpath("//span[contains(@class, 'value wrap-content') and text()='IFSAD-2000 (737-NG)']");
 
     public RaiseFault(WebDriver driver) {
         this.driver = driver;
@@ -149,5 +151,21 @@ public class RaiseFault  {
         // Click the button
         button.click();
         Thread.sleep(3000);
+    }
+    public void clickAircraftInput() {
+        // Wait for the "Aircraft" input field to be clickable
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement element = wait.until(ExpectedConditions.elementToBeClickable(aircraftInputField));
+
+        // Click on the "Aircraft" input field
+        element.click();
+    }
+    public void clickIFSADText() {
+        // Wait for the "IFSAD-2000 (737-NG)" span element to be clickable
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement element = wait.until(ExpectedConditions.elementToBeClickable(ifsadTextSpan));
+
+        // Click on the "IFSAD-2000 (737-NG)" span element
+        element.click();
     }
 }

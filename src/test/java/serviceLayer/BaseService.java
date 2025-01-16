@@ -1,18 +1,13 @@
 package serviceLayer;
 
-import io.cucumber.datatable.DataTable;
-import io.cucumber.java.After;
 import org.openqa.selenium.WebDriver;
 import stepDefinition.WebDriverProvider;
-import utility.PageObjectFactory;
-
-import java.util.List;
-import java.util.Map;
+import utility.WebPageObjectFactory;
 
 public  class BaseService {
 
     protected WebDriver driver;
-    protected PageObjectFactory pageObjectFactory;
+    protected WebPageObjectFactory webPageObjectFactory;
 
 
     // Constructor to initialize the WebDriver
@@ -22,9 +17,9 @@ public  class BaseService {
 
     // Setup the PageObjectFactory
     protected void setupPageFactory() {
-        if (pageObjectFactory == null) {
+        if (webPageObjectFactory == null) {
 
-            this.pageObjectFactory = new PageObjectFactory(driver);
+            this.webPageObjectFactory = new WebPageObjectFactory(driver);
         }
     }
 

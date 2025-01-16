@@ -4,7 +4,7 @@ package utility;
 import org.openqa.selenium.WebDriver;
 import pagesWeb.*;
 
-public class PageObjectFactory  {
+public class WebPageObjectFactory {
     private WebDriver driver;
 
     // Initialize page objects here
@@ -13,9 +13,11 @@ public class PageObjectFactory  {
     private LandingPage landingPage;
     private HomePage homePage;
     private AircraftTurnsPage aircraftTurnsPage;
+    private AircraftTurnDetailsPage aircraftTurnDetailsPage;
+    private TechnicianLobbyPage technicianLobbyPage;
 
     // Constructor to initialize the driver
-    public PageObjectFactory(WebDriver driver) {
+    public WebPageObjectFactory(WebDriver driver) {
         this.driver = driver;
 
     }
@@ -41,6 +43,18 @@ public class PageObjectFactory  {
             aircraftTurnsPage = new AircraftTurnsPage(driver);
         }
         return aircraftTurnsPage;
+    }
+    public AircraftTurnDetailsPage getAircraftTurnDetailsPageService() {
+        if (aircraftTurnDetailsPage == null) {
+            aircraftTurnDetailsPage = new AircraftTurnDetailsPage(driver);
+        }
+        return aircraftTurnDetailsPage;
+    }
+    public TechnicianLobbyPage getTechnicianLobbyPagePageService() {
+        if (technicianLobbyPage == null) {
+            technicianLobbyPage = new TechnicianLobbyPage(driver);
+        }
+        return technicianLobbyPage;
     }
 }
 

@@ -33,13 +33,13 @@ public class WebDriverProvider {
             chromeDriverMap.put(threadId, chromeDriver);
         }
 
-        // Initialize EdgeDriver if not already initialized
-        if (!mobileDriverMap.containsKey(threadId)) {
+        // Initialize mobile if not already initialized
+        /*if (!mobileDriverMap.containsKey(threadId)) {
             WebDriver edgeDriver = new EdgeDriver();
             edgeDriver.get("https://ifsmxmm24r2dev3cmb.rnd.ifsdevworld.com/");
             edgeDriver.manage().window().maximize();
             mobileDriverMap.put(threadId, edgeDriver);
-        }
+        }*/
     }
 
     // Method to get ChromeDriver for the current thread

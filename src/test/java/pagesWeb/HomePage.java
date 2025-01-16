@@ -22,6 +22,8 @@ public class HomePage  {
 
     public  String navigationToTurns_xpath = "//span[@class='subtitle ng-star-inserted' and text()='Aviation Maintenance / Mobile Maintenance']";
 
+    private By navigationToLobby = By.xpath("//span[contains(@class, 'subtitle') and text()='Aviation Maintenance']");
+
 
 
     public  void ValidateText(){
@@ -63,7 +65,15 @@ public class HomePage  {
         System.out.println("clicked Mobile maintenance");
         Thread.sleep(5000);
     }
+    public void clickAviationMaintenanceTitleForRF() {
+        // Wait for the "Aviation Maintenance" element to be visible
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(navigationToLobby));
 
-
-
+        // Click on the "Aviation Maintenance" element
+        element.click();
+    }
 }
+
+
+

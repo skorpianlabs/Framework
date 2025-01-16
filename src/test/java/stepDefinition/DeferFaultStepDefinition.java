@@ -7,6 +7,7 @@ import io.cucumber.java.en.Given;
 import org.openqa.selenium.WebDriver;
 import serviceLayer.ChannelDecider;
 import serviceLayer.WebServices;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class DeferFaultStepDefinition {
 
@@ -38,6 +39,7 @@ public class DeferFaultStepDefinition {
         else{
             System.out.println("use API path");
         }
+        assertEquals("ABC", raiseFaultWebService.assertRaisedFaultFromTurn());
 
     }
 
