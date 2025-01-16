@@ -1,19 +1,14 @@
-package businessObjects;
+package serviceLayer;
 
 import io.cucumber.datatable.DataTable;
-import io.cucumber.java.After;
-import org.openqa.selenium.WebDriver;
-import serviceLayer.BaseService;
-import serviceLayer.WebServices;
 import stepDefinition.WebDriverProvider;
-import utility.PageObjectFactory;
 
 import java.util.List;
 import java.util.Map;
 
-public class RaiseFaultBO extends BaseService {
+public class RaiseFaultWebService extends BaseService {
 
-    public RaiseFaultBO() {
+    public RaiseFaultWebService() {
         super(WebDriverProvider.getChromeDriver());
         setupPageFactory();
 

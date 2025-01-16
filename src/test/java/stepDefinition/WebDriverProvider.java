@@ -2,6 +2,9 @@ package stepDefinition;
 
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
+import io.cucumber.java.Scenario;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
@@ -25,7 +28,7 @@ public class WebDriverProvider {
         // Initialize ChromeDriver if not already initialized
         if (!chromeDriverMap.containsKey(threadId)) {
             WebDriver chromeDriver = new ChromeDriver();
-            chromeDriver.get("https://ifs24r2mxmm1devcmb.rnd.ifsdevworld.com/");
+            chromeDriver.get("https://ifsmxmm24r2dev3cmb.rnd.ifsdevworld.com/");
             chromeDriver.manage().window().maximize();
             chromeDriverMap.put(threadId, chromeDriver);
         }
@@ -33,7 +36,7 @@ public class WebDriverProvider {
         // Initialize EdgeDriver if not already initialized
         if (!mobileDriverMap.containsKey(threadId)) {
             WebDriver edgeDriver = new EdgeDriver();
-            edgeDriver.get("https://ifs24r2mxmm1devcmb.rnd.ifsdevworld.com/");
+            edgeDriver.get("https://ifsmxmm24r2dev3cmb.rnd.ifsdevworld.com/");
             edgeDriver.manage().window().maximize();
             mobileDriverMap.put(threadId, edgeDriver);
         }
@@ -51,12 +54,16 @@ public class WebDriverProvider {
 
     // @After hook to quit both drivers after each scenario
     @After
-    public static void quitDriver() {
+    public static void quitDriver(Scenario scenario) {
         long threadId = Thread.currentThread().getId();
 
         // Quit ChromeDriver if it exists
         WebDriver chromeDriver = chromeDriverMap.get(threadId);
         if (chromeDriver != null) {
+            if(scenario.isFailed()){
+                final byte[] scrnShot = ((TakesScreenshot)chromeDriver).getScreenshotAs(OutputType.BYTES);
+                scenario.attach(scrnShot, "image/png", scenario.getName());
+            }
             chromeDriver.quit();
             chromeDriverMap.remove(threadId);
         }

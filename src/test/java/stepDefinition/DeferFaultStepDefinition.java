@@ -1,6 +1,6 @@
 package stepDefinition;
 
-import businessObjects.RaiseFaultBO;
+import serviceLayer.RaiseFaultWebService;
 import com.google.inject.Inject;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
@@ -19,7 +19,7 @@ public class DeferFaultStepDefinition {
     protected ChannelDecider channelDecider;
 
     @Inject
-    protected RaiseFaultBO raiseFaultBO;
+    protected RaiseFaultWebService raiseFaultWebService;
 
     private String channel;
 
@@ -29,7 +29,7 @@ public class DeferFaultStepDefinition {
 
         channel= channelDecider.findPlatform(dataTable);
         if (channel.equals("web"))  {
-            raiseFaultBO.raiseAFault(dataTable);
+            raiseFaultWebService.raiseAFault(dataTable);
         }
         if (channel.equals("mobile")){
 
