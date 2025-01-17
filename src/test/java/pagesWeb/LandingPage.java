@@ -4,7 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 
-public class LandingPage  {
+public class LandingPage extends BasePage  {
 
     private WebDriver driver;
 

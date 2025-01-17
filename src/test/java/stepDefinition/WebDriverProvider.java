@@ -8,6 +8,8 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
+
+import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,6 +32,7 @@ public class WebDriverProvider {
             WebDriver chromeDriver = new ChromeDriver();
             chromeDriver.get("https://ifsmxmm24r2dev3cmb.rnd.ifsdevworld.com/");
             chromeDriver.manage().window().maximize();
+            chromeDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
             chromeDriverMap.put(threadId, chromeDriver);
         }
 

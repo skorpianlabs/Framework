@@ -5,7 +5,7 @@ Feature: Login AS a Technician and Defer a Fault one
       | username | password | channel |
       | joha     | joha     | web     |
 
-  Scenario: Validate Defer Fault flow in Web one
+  Scenario: Validate Defer Fault flow
     Given Technician Raise a Fault
       | searchKey         | inputFieldText | channel | page |
       | My Aircraft Turns | P5-1524        | web     | turn |

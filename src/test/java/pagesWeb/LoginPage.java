@@ -1,48 +1,44 @@
 package pagesWeb;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
+public class LoginPage extends BasePage {
 
-public class LoginPage {
-
-   private WebDriver driver;
+    private WebDriver driver;
 
     public LoginPage(WebDriver driver) {
         this.driver = driver;
+        PageFactory.initElements(driver, this);
     }
 
+    @FindBy(id = "aurenalink")
+    private WebElement aurenaLink;
 
-    private static By aurenalink = By.id("aurenalink");
+    @FindBy(xpath = "//*[@id=\"username\"]")
+    private WebElement userNameField;
 
-    public static  String userName_xpath = "//*[@id=\"username\"]";
+    @FindBy(xpath = "//*[@id=\"password\"]")
+    private WebElement passwordField;
 
-    public static  String password_xpath = "//*[@id=\"password\"]";
+    @FindBy(xpath = "//*[@id=\"id-ifs-login-btn\"]")
+    private WebElement loginButton;
 
-    public static String loginBtn_xpath = "//*[@id=\"id-ifs-login-btn\"]";
-
-    public  void clickOnAurenaLink() {
-        WebElement linkElement = driver.findElement(aurenalink);
-        linkElement.click();
+    public void clickOnAurenaLink() {
+        aurenaLink.click();
     }
 
-    public  void give_userName(String UserName) throws InterruptedException {
-
-        driver.findElement(By.xpath(userName_xpath)).sendKeys(UserName);
-
+    public void giveUserName(String userName) {
+        userNameField.sendKeys(userName);
     }
-    public  void give_password(String password) throws InterruptedException {
 
-
-        driver.findElement(By.xpath(password_xpath)).sendKeys(password);
-
+    public void givePassword(String password) {
+        passwordField.sendKeys(password);
     }
-    public  void clickLogin() throws InterruptedException {
 
-
-        driver.findElement(By.xpath(loginBtn_xpath)).click();
-
-
+    public void clickLogin() {
+        loginButton.click();
     }
 }

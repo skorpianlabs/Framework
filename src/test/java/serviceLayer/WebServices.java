@@ -12,11 +12,6 @@ public class WebServices extends BaseService {
         super(WebDriverProvider.getChromeDriver());
         setupPageFactory();
     }
-
-    public void initializeWebFactory() throws InterruptedException {
-        setupPageFactory();
-    }
-
     String description;
 
     public void routeToLoginDetailsPage(DataTable dataTable) {
@@ -27,8 +22,8 @@ public class WebServices extends BaseService {
             String password = mapValues.get("password");
 
             webPageObjectFactory.getLoginPageService().clickOnAurenaLink();
-            webPageObjectFactory.getLoginPageService().give_userName(username);
-            webPageObjectFactory.getLoginPageService().give_password(password);
+            webPageObjectFactory.getLoginPageService().giveUserName(username);
+            webPageObjectFactory.getLoginPageService().givePassword(password);
             webPageObjectFactory.getLoginPageService().clickLogin();
             Thread.sleep(3000);
 
@@ -83,7 +78,7 @@ public class WebServices extends BaseService {
     }
     public void routeToTaskDetailsPage(){
         try {
-            webPageObjectFactory.getAircraftTurnDetailsPageService().captureAndClickraisedFault();
+            webPageObjectFactory.getAircraftTurnDetailsPageService().captureAndClickRaisedFault();
             webPageObjectFactory.getAircraftTurnDetailsPageService().clickDetailsButton();
             Thread.sleep(2000);
         }
@@ -94,7 +89,7 @@ public class WebServices extends BaseService {
     }
     public void putTaskDetailsIntoAMap(){
         try {
-            webPageObjectFactory.getAircraftTurnDetailsPageService().putDescriptionalueTOMap();
+            webPageObjectFactory.getAircraftTurnDetailsPageService().putDescriptionValueToMap();
         }
         catch (Exception e){
             System.err.println("An error occurred while selecting raised fault: " + e.getMessage());
@@ -103,7 +98,7 @@ public class WebServices extends BaseService {
     }
     public String getTaskDetailsFromMap(){
         try {
-        description = webPageObjectFactory.getAircraftTurnDetailsPageService().getDescriptionalueFromMap();
+        description = webPageObjectFactory.getAircraftTurnDetailsPageService().getDescriptionValueFromMap();
         }
         catch (Exception e){
             System.err.println("An error occurred while selecting raised fault: " + e.getMessage());

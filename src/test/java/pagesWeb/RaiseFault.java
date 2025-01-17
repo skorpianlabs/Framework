@@ -1,171 +1,112 @@
 package pagesWeb;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
-public class RaiseFault  {
+public class RaiseFault extends BasePage {
 
     private WebDriver driver;
-    private  By SystemButton = By.xpath("By.xpath(//label[text()='System']/parent::*//button");
-    private  By Systemvalue = By.xpath("//span[text()='INTRODUCTION']");
-    private By aircraftInputField = By.xpath("//label[@title='Aircraft']/following::button//i");
-    private By ifsadTextSpan = By.xpath("//span[contains(@class, 'value wrap-content') and text()='IFSAD-2000 (737-NG)']");
 
     public RaiseFault(WebDriver driver) {
         this.driver = driver;
+        PageFactory.initElements(driver, this);
     }
-    public  void clickButtonRelativeToLabelSystem() {
+
+    @FindBy(xpath = "//label[@title='System']/following::button//i")
+    private WebElement systemButton;
+
+    @FindBy(xpath = "//span[text()='INTRODUCTION']")
+    private WebElement systemValue;
+
+    @FindBy(xpath = "//label[@title='Aircraft']/following::button//i")
+    private WebElement aircraftInputField;
+
+    @FindBy(xpath = "//span[contains(@class, 'value wrap-content') and text()='IFSAD-2000 (737-NG)']")
+    private WebElement ifsadTextSpan;
+
+    @FindBy(xpath = "//button[@title='Raise Fault']")
+    private WebElement raiseFaultButton;
+
+    @FindBy(xpath = "//label[@title='Fault Source']/following::button//i")
+    private WebElement faultSourceButton;
+
+    @FindBy(xpath = "//span[text()='AUTH']")
+    private WebElement faultSourceValue;
+
+    @FindBy(xpath = "//label[@title='Fault Severity']/following::button//i")
+    private WebElement faultSeverityButton;
+
+    @FindBy(xpath = "//span[text()='MEL']")
+    private WebElement faultSeverityValue;
+
+    @FindBy(xpath = "//label[@title='Description']/following::textarea")
+    private WebElement descriptionField;
+
+    @FindBy(xpath = "//*[@id='RaiseFaultAssistant-fndToolbar-action-fndButton-RaiseFaultAssistant_RaiseFault-button']")
+    private WebElement okButton;
+
+    public void clickButtonRelativeToLabelSystem() {
+        systemButton.click();
+        System.out.println("Button clicked successfully!");
+    }
+
+    public void captureSelectedValueSystem() {
+        systemValue.click();
+    }
+
+    public void clickButtonRaiseFault() {
         try {
-            // Set up WebDriverWait with a 10-second timeout (adjust the duration as needed)
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-
-            // Locate the button element relative to the label with text "System"
-            WebElement buttonElement = wait.until(ExpectedConditions.visibilityOfElementLocated(
-                    By.xpath("//label[@title='System']/following::button//i")
-            ));
-
-            // Once the button is visible, click it
-            buttonElement.click();
-            System.out.println("Button clicked successfully!");
+            wait.until(ExpectedConditions.elementToBeClickable(raiseFaultButton));
+            Thread.sleep(2000);
+            raiseFaultButton.click();
         } catch (Exception e) {
-            System.out.println("Error while clicking the button: " + e.getMessage());
+            System.out.println("An error occurred while clicking the 'Raise Fault' button: " + e.getMessage());
         }
     }
-    public  void captureSelectedValueSystem() {
-        try {
-            // Define the XPath to locate the span element with text 'INTRODUCTION'
-            By systemValue = By.xpath("//span[text()='INTRODUCTION']");
 
-            // Wait for the element to be visible before trying to find it (use WebDriverWait)
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-            WebElement systemValueElement = wait.until(ExpectedConditions.visibilityOfElementLocated(systemValue));
-
-            // Capture the text of the element
-            systemValueElement.click();
-
-        } catch (Exception e) {
-            System.out.println("Error while capturing dropdown value: " + e.getMessage());
-        }
+    public void clickButtonRelativeToFaultSource() {
+        faultSourceButton.click();
+        System.out.println("Button clicked successfully!");
     }
 
-    public  void clickButtonRaiseFault() {
-        try {
-            // Set up WebDriverWait with a 10-second timeout (adjust the duration as needed)
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-
-            // Hard-code the title value 'Raise Fault' in the XPath
-            By buttonLocator = By.xpath("//button[@title='Raise Fault']");
-
-            // Wait for the button to be visible and clickable
-            WebElement buttonElement = wait.until(ExpectedConditions.elementToBeClickable(buttonLocator));
-
-            // Click the button
-            buttonElement.click();
-            System.out.println("Button with title 'Raise Fault' clicked successfully!");
-        } catch (Exception e) {
-            System.out.println("Error while clicking the button: " + e.getMessage());
-        }
+    public void captureSelectedValueFaultSource() {
+        faultSourceValue.click();
     }
-    public  void clickButtonRelativeToFaultSource() {
-        try {
-            // Set up WebDriverWait with a 10-second timeout (adjust the duration as needed)
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
-            // Locate the button element relative to the label with text "System"
-            WebElement buttonElement = wait.until(ExpectedConditions.visibilityOfElementLocated(
-                    By.xpath("//label[@title='Fault Source']/following::button//i")
-            ));
-
-            // Once the button is visible, click it
-            buttonElement.click();
-            System.out.println("Button clicked successfully!");
-        } catch (Exception e) {
-            System.out.println("Error while clicking the button: " + e.getMessage());
-        }
+    public void clickButtonRelativeToFaultSeverity() {
+        faultSeverityButton.click();
+        System.out.println("Button clicked successfully!");
     }
-    public  void captureSelectedValueFaultSource() {
-        try {
-            // Define the XPath to locate the span element with text 'INTRODUCTION'
-            By systemValue = By.xpath("//span[text()='AUTH']");
 
-            // Wait for the element to be visible before trying to find it (use WebDriverWait)
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-            WebElement systemValueElement = wait.until(ExpectedConditions.visibilityOfElementLocated(systemValue));
-
-            // Capture the text of the element
-            systemValueElement.click();
-
-        } catch (Exception e) {
-            System.out.println("Error while capturing dropdown value: " + e.getMessage());
-        }
+    public void captureSelectedValueFaultSeverity() {
+        faultSeverityValue.click();
     }
-    public  void clickButtonRelativeToFaultSeverity() {
-        try {
-            // Set up WebDriverWait with a 10-second timeout (adjust the duration as needed)
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
-            // Locate the button element relative to the label with text "System"
-            WebElement buttonElement = wait.until(ExpectedConditions.visibilityOfElementLocated(
-                    By.xpath("//label[@title='Fault Severity']/following::button//i")
-            ));
-
-            // Once the button is visible, click it
-            buttonElement.click();
-            System.out.println("Button clicked successfully!");
-        } catch (Exception e) {
-            System.out.println("Error while clicking the button: " + e.getMessage());
-        }
-    }
-    public  void captureSelectedValueFaultSeverity() {
-        try {
-            // Define the XPath to locate the span element with text 'INTRODUCTION'
-            By systemValue = By.xpath("//span[text()='MEL']");
-
-            // Wait for the element to be visible before trying to find it (use WebDriverWait)
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-            WebElement systemValueElement = wait.until(ExpectedConditions.visibilityOfElementLocated(systemValue));
-
-            // Capture the text of the element
-            systemValueElement.click();
-
-        } catch (Exception e) {
-            System.out.println("Error while capturing dropdown value: " + e.getMessage());
-        }
-    }
-    public  void enterDescription(String descriptionText) {
-        // Locate the textarea element relative to the label with title 'Description'
-        WebElement descriptionField = driver.findElement(By.xpath("//label[@title='Description']/following::textarea"));
-
-        // Clear any pre-existing text in the textarea and send the new value
+    public void enterDescription(String descriptionText) {
         descriptionField.clear();
         descriptionField.sendKeys(descriptionText);
     }
-    public  void clickButtonOK() throws InterruptedException {
-        // Locate the button element using the provided XPath
-        WebElement button = driver.findElement(By.xpath("//*[@id='RaiseFaultAssistant-fndToolbar-action-fndButton-RaiseFaultAssistant_RaiseFault-button']"));
 
-        // Click the button
-        button.click();
+    public void clickButtonOK() throws InterruptedException {
+        okButton.click();
         Thread.sleep(3000);
     }
+
     public void clickAircraftInput() {
-        // Wait for the "Aircraft" input field to be clickable
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        WebElement element = wait.until(ExpectedConditions.elementToBeClickable(aircraftInputField));
-
-        // Click on the "Aircraft" input field
-        element.click();
+        wait.until(ExpectedConditions.elementToBeClickable(aircraftInputField));
+        aircraftInputField.click();
     }
-    public void clickIFSADText() {
-        // Wait for the "IFSAD-2000 (737-NG)" span element to be clickable
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        WebElement element = wait.until(ExpectedConditions.elementToBeClickable(ifsadTextSpan));
 
-        // Click on the "IFSAD-2000 (737-NG)" span element
-        element.click();
+    public void clickIFSADText() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.elementToBeClickable(ifsadTextSpan));
+        ifsadTextSpan.click();
     }
 }
