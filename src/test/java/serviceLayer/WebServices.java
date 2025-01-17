@@ -77,7 +77,7 @@ public class WebServices extends BaseService {
             webPageObjectFactory.getAircraftTurnsPageService().clickFilterPanelButton();
             webPageObjectFactory.getAircraftTurnsPageService().clickArrivalFlight();
             webPageObjectFactory.getAircraftTurnsPageService().enterTextIntoInputField(inputFieldText);
-            webPageObjectFactory.getAircraftTurnsPageService().clickButtonRelativeToSpan();
+            webPageObjectFactory.getAircraftTurnsPageService().clickSelectedTurn();
 
         } catch (Exception e) {
             logger.error("An error occurred while routing to the Aircraft Turns page: {}", e.getMessage(), e);

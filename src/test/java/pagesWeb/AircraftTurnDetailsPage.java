@@ -19,7 +19,7 @@ public class AircraftTurnDetailsPage extends BasePage {
     }
 
     @FindBy(id = "AircraftTurnDetails-TaskList-fndRow-0-fndCommandCell")
-    private WebElement btnRaiseFault;
+    private WebElement RaiseFaultButton;
 
     @FindBy(xpath = "//fnd-granite-button-wrapper/a/span[2]")
     private WebElement simpleXpath;
@@ -28,7 +28,7 @@ public class AircraftTurnDetailsPage extends BasePage {
     private WebElement requestDeferralButton;
 
     @FindBy(id = "AircraftTurnDetails-TaskList-fndRow-0-fndCommandCell-fndCommandDropdown-fndMenu-Details-fndButton-button")
-    private WebElement btnDetails;
+    private WebElement DetailsButton;
 
     @FindBy(xpath = "//granite-badge[@id='FaultDetails-FaultDetailsGroup-Objstate-badgeComponent-button']")
     private WebElement faultStatusBadge;
@@ -40,14 +40,14 @@ public class AircraftTurnDetailsPage extends BasePage {
 
     public void captureAndClickRaisedFault() {
         logger.info(STARTED + getCurrentMethodName());
-        btnRaiseFault.click();
+        RaiseFaultButton.click();
         System.out.println("Element with ID 'AircraftTurnDetails-TaskList-fndRow-0-fndCommandCell' clicked.");
         logger.info(ENDED + getCurrentMethodName());
     }
 
     public void clickDetailsButton() {
         logger.info(STARTED + getCurrentMethodName());
-        btnDetails.click();
+        DetailsButton.click();
         System.out.println("Element clicked.");
         logger.info(ENDED + getCurrentMethodName());
     }

@@ -29,10 +29,10 @@ public class AircraftTurnsPage extends BasePage {
     private WebElement parentDiv;
 
     @FindBy(css = "#MyAircraftTurnsCardPage-FlightsList-filterPane-fndFieldFilter-LegNo-optionsPane input")
-    private WebElement inputField;
+    private WebElement LegNoinputField;
 
     @FindBy(xpath = "//span[@data-fnd='card-title-label' and text()='YOW - IFSAD-1524 - (AIRLINE)']/following::button[@type='button' and contains(@class, 'button')]")
-    private WebElement buttonElement;
+    private WebElement turnSelectionButton;
 
     @FindBy(xpath = "//label[text()='System']/parent::*//button")
     private WebElement systemButton;
@@ -85,15 +85,15 @@ public class AircraftTurnsPage extends BasePage {
     public void enterTextIntoInputField(String text) {
         logger.info(STARTED + getCurrentMethodName());
         clickParentDiv();
-        inputField.clear();
-        inputField.sendKeys(text);
+        LegNoinputField.clear();
+        LegNoinputField.sendKeys(text);
         System.out.println("Entered text into the input field: " + text);
         logger.info(ENDED + getCurrentMethodName());
     }
 
-    public void clickButtonRelativeToSpan() {
+    public void clickSelectedTurn() {
         logger.info(STARTED + getCurrentMethodName());
-        buttonElement.click();
+        turnSelectionButton.click();
         System.out.println("User clicked the button relative to the span");
         logger.info(ENDED + getCurrentMethodName());
     }
