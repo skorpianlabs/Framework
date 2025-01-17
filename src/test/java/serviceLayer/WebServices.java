@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class WebServices extends BaseService {
 
-    private static final Logger logger = LogManager.getLogger(WebServices.class);
+    private final Logger logger = LogManager.getLogger(WebServices.class);
     String description;
 
     public WebServices() {
