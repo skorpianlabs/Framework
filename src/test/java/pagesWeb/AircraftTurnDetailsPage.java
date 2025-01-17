@@ -4,7 +4,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-
+import static constant.CommonConstant.ENDED;
+import static constant.CommonConstant.STARTED;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,7 +19,7 @@ public class AircraftTurnDetailsPage extends BasePage {
     }
 
     @FindBy(id = "AircraftTurnDetails-TaskList-fndRow-0-fndCommandCell")
-    private WebElement elementId;
+    private WebElement btnRaiseFault;
 
     @FindBy(xpath = "//fnd-granite-button-wrapper/a/span[2]")
     private WebElement simpleXpath;
@@ -27,7 +28,7 @@ public class AircraftTurnDetailsPage extends BasePage {
     private WebElement requestDeferralButton;
 
     @FindBy(id = "AircraftTurnDetails-TaskList-fndRow-0-fndCommandCell-fndCommandDropdown-fndMenu-Details-fndButton-button")
-    private WebElement detailsButton;
+    private WebElement btnDetails;
 
     @FindBy(xpath = "//granite-badge[@id='FaultDetails-FaultDetailsGroup-Objstate-badgeComponent-button']")
     private WebElement faultStatusBadge;
@@ -38,31 +39,45 @@ public class AircraftTurnDetailsPage extends BasePage {
     private Map<String, String> taskDetailsMap = new HashMap<>();
 
     public void captureAndClickRaisedFault() {
-        elementId.click();
+        logger.info(STARTED + getCurrentMethodName());
+        btnRaiseFault.click();
         System.out.println("Element with ID 'AircraftTurnDetails-TaskList-fndRow-0-fndCommandCell' clicked.");
+        logger.info(ENDED + getCurrentMethodName());
     }
 
     public void clickDetailsButton() {
-        detailsButton.click();
+        logger.info(STARTED + getCurrentMethodName());
+        btnDetails.click();
         System.out.println("Element clicked.");
+        logger.info(ENDED + getCurrentMethodName());
     }
 
     public void clickRequestDeferralButton() {
+        logger.info(STARTED + getCurrentMethodName());
         requestDeferralButton.click();
         System.out.println("Request Deferral button clicked.");
+        logger.info(ENDED + getCurrentMethodName());
     }
 
     public String getFaultStatus() {
-        return faultStatusBadge.getText().trim();
+        logger.info(STARTED + getCurrentMethodName());
+        String status = faultStatusBadge.getText().trim();
+        logger.info(ENDED + getCurrentMethodName());
+        return status;
     }
 
     public void putDescriptionValueToMap() {
+        logger.info(STARTED + getCurrentMethodName());
         String description = descriptionField.getAttribute("tooltip");
         taskDetailsMap.put("Description", description);
         System.out.println("Description added to the map");
+        logger.info(ENDED + getCurrentMethodName());
     }
 
     public String getDescriptionValueFromMap() {
-        return taskDetailsMap.get("Description");
+        logger.info(STARTED + getCurrentMethodName());
+        String description = taskDetailsMap.get("Description");
+        logger.info(ENDED + getCurrentMethodName());
+        return description;
     }
 }

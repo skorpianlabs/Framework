@@ -2,19 +2,26 @@ package serviceLayer;
 
 import io.cucumber.datatable.DataTable;
 import stepDefinition.WebDriverProvider;
+import static constant.CommonConstant.ENDED;
+import static constant.CommonConstant.STARTED;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 import java.util.Map;
 
 public class WebServices extends BaseService {
 
+    private static final Logger logger = LogManager.getLogger(WebServices.class);
+    String description;
+
     public WebServices() {
         super(WebDriverProvider.getChromeDriver());
         setupPageFactory();
     }
-    String description;
 
     public void routeToLoginDetailsPage(DataTable dataTable) {
+        logger.info(STARTED + getCurrentMethodName());
         try {
             List<Map<String, String>> data = dataTable.asMaps(String.class, String.class);
             Map<String, String> mapValues = data.get(0);
@@ -28,35 +35,36 @@ public class WebServices extends BaseService {
             Thread.sleep(3000);
 
         } catch (Exception e) {
-            System.err.println("An error occurred while navigating to the login page: " + e.getMessage());
-            e.printStackTrace();
+            logger.error("An error occurred while navigating to the login page: {}", e.getMessage(), e);
         }
+        logger.info(ENDED + getCurrentMethodName());
     }
+
     public void routeToTechnicianLobbyPage(DataTable dataTable) {
+        logger.info(STARTED + getCurrentMethodName());
         try {
             List<Map<String, String>> data = dataTable.asMaps(String.class, String.class);
             for (Map<String, String> mapValues : data) {
-                // Check if the page is "lobby"
                 String page = mapValues.get("page");
 
                 if ("lobby".equalsIgnoreCase(page)) {
-                    // If the page is "lobby", get the corresponding searchKey
                     String searchKey = mapValues.get("searchKey");
 
                     webPageObjectFactory.getHomePageService().clickNavigationLink();
                     webPageObjectFactory.getHomePageService().navigationSearchKey(searchKey);
                     webPageObjectFactory.getHomePageService().clickAviationMaintenanceTitleForRF();
-                    break; // Exit the loop after processing the first matching "lobby" page
+                    break;
                 }
             }
 
         } catch (Exception e) {
-            System.err.println("An error occurred while routing Technician Lobby page: " + e.getMessage());
-            e.printStackTrace();
+            logger.error("An error occurred while routing Technician Lobby page: {}", e.getMessage(), e);
         }
+        logger.info(ENDED + getCurrentMethodName());
     }
 
     public void routeToMyAircraftTurnsPage(DataTable dataTable) {
+        logger.info(STARTED + getCurrentMethodName());
         try {
             List<Map<String, String>> data = dataTable.asMaps(String.class, String.class);
             Map<String, String> mapValues = data.get(0);
@@ -72,39 +80,47 @@ public class WebServices extends BaseService {
             webPageObjectFactory.getAircraftTurnsPageService().clickButtonRelativeToSpan();
 
         } catch (Exception e) {
-            System.err.println("An error occurred while routing to the Aircraft Turns page: " + e.getMessage());
-            e.printStackTrace();
+            logger.error("An error occurred while routing to the Aircraft Turns page: {}", e.getMessage(), e);
         }
+        logger.info(ENDED + getCurrentMethodName());
     }
-    public void routeToTaskDetailsPage(){
+
+    public void routeToTaskDetailsPage() {
+        logger.info(STARTED + getCurrentMethodName());
         try {
             webPageObjectFactory.getAircraftTurnDetailsPageService().captureAndClickRaisedFault();
             webPageObjectFactory.getAircraftTurnDetailsPageService().clickDetailsButton();
             Thread.sleep(2000);
+
+        } catch (Exception e) {
+            logger.error("An error occurred while selecting raised fault: {}", e.getMessage(), e);
         }
-        catch (Exception e){
-            System.err.println("An error occurred while selecting raised fault: " + e.getMessage());
-            e.printStackTrace();
-        }
+        logger.info(ENDED + getCurrentMethodName());
     }
-    public void putTaskDetailsIntoAMap(){
+
+    public void putTaskDetailsIntoAMap() {
+        logger.info(STARTED + getCurrentMethodName());
         try {
             webPageObjectFactory.getAircraftTurnDetailsPageService().putDescriptionValueToMap();
+
+        } catch (Exception e) {
+            logger.error("An error occurred while putting task details into map: {}", e.getMessage(), e);
         }
-        catch (Exception e){
-            System.err.println("An error occurred while selecting raised fault: " + e.getMessage());
-            e.printStackTrace();
-        }
+        logger.info(ENDED + getCurrentMethodName());
     }
-    public String getTaskDetailsFromMap(){
+
+    public String getTaskDetailsFromMap() {
+        logger.info(STARTED + getCurrentMethodName());
         try {
-        description = webPageObjectFactory.getAircraftTurnDetailsPageService().getDescriptionValueFromMap();
+            description = webPageObjectFactory.getAircraftTurnDetailsPageService().getDescriptionValueFromMap();
+            logger.info(ENDED + getCurrentMethodName());
+            return description;
+
+        } catch (Exception e) {
+            logger.error("An error occurred while retrieving task details from map: {}", e.getMessage(), e);
+            return null;
         }
-        catch (Exception e){
-            System.err.println("An error occurred while selecting raised fault: " + e.getMessage());
-            e.printStackTrace();
-        }
-        return description;
+
     }
 
 }

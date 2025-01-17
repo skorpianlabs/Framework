@@ -6,6 +6,9 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import static constant.CommonConstant.ENDED;
+import static constant.CommonConstant.STARTED;
+
 import java.time.Duration;
 
 public class RaiseFault extends BasePage {
@@ -51,62 +54,81 @@ public class RaiseFault extends BasePage {
     private WebElement okButton;
 
     public void clickButtonRelativeToLabelSystem() {
+        logger.info(STARTED + getCurrentMethodName());
         systemButton.click();
-        System.out.println("Button clicked successfully!");
+        logger.info(ENDED + getCurrentMethodName());
     }
 
     public void captureSelectedValueSystem() {
+        logger.info(STARTED + getCurrentMethodName());
         systemValue.click();
+        logger.info(ENDED + getCurrentMethodName());
     }
 
     public void clickButtonRaiseFault() {
+        logger.info(STARTED + getCurrentMethodName());
         try {
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
             wait.until(ExpectedConditions.elementToBeClickable(raiseFaultButton));
             Thread.sleep(2000);
             raiseFaultButton.click();
         } catch (Exception e) {
-            System.out.println("An error occurred while clicking the 'Raise Fault' button: " + e.getMessage());
+            logger.error("An error occurred while clicking the 'Raise Fault' button: " + e.getMessage());
         }
+        logger.info(ENDED + getCurrentMethodName());
     }
 
     public void clickButtonRelativeToFaultSource() {
+        logger.info(STARTED + getCurrentMethodName());
         faultSourceButton.click();
-        System.out.println("Button clicked successfully!");
+        logger.info(ENDED + getCurrentMethodName());
     }
 
     public void captureSelectedValueFaultSource() {
+        logger.info(STARTED + getCurrentMethodName());
         faultSourceValue.click();
+        logger.info(ENDED + getCurrentMethodName());
     }
 
     public void clickButtonRelativeToFaultSeverity() {
+        logger.info(STARTED + getCurrentMethodName());
         faultSeverityButton.click();
-        System.out.println("Button clicked successfully!");
+        logger.info(ENDED + getCurrentMethodName());
     }
 
     public void captureSelectedValueFaultSeverity() {
+        logger.info(STARTED + getCurrentMethodName());
         faultSeverityValue.click();
+        logger.info(ENDED + getCurrentMethodName());
     }
 
     public void enterDescription(String descriptionText) {
+        logger.info(STARTED + getCurrentMethodName());
         descriptionField.clear();
         descriptionField.sendKeys(descriptionText);
+        logger.info(ENDED + getCurrentMethodName());
     }
 
     public void clickButtonOK() throws InterruptedException {
+        logger.info(STARTED + getCurrentMethodName());
         okButton.click();
         Thread.sleep(3000);
+        logger.info(ENDED + getCurrentMethodName());
     }
 
     public void clickAircraftInput() {
+        logger.info(STARTED + getCurrentMethodName());
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.elementToBeClickable(aircraftInputField));
         aircraftInputField.click();
+        logger.info(ENDED + getCurrentMethodName());
     }
 
     public void clickIFSADText() {
+        logger.info(STARTED + getCurrentMethodName());
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.elementToBeClickable(ifsadTextSpan));
         ifsadTextSpan.click();
+        logger.info(ENDED + getCurrentMethodName());
     }
 }

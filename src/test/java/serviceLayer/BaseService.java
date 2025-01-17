@@ -22,5 +22,11 @@ public  class BaseService {
             this.webPageObjectFactory = new WebPageObjectFactory(driver);
         }
     }
+    public String getCurrentMethodName() {
+
+        StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+        String methodName = stackTrace[2].getMethodName();
+        return methodName;
+    }
 
 }

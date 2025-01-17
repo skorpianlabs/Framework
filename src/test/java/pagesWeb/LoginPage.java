@@ -4,6 +4,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import static constant.CommonConstant.ENDED;
+import static constant.CommonConstant.STARTED;
 
 public class LoginPage extends BasePage {
 
@@ -27,18 +29,26 @@ public class LoginPage extends BasePage {
     private WebElement loginButton;
 
     public void clickOnAurenaLink() {
+        logger.info(STARTED + getCurrentMethodName());
         aurenaLink.click();
+        logger.info(ENDED + getCurrentMethodName());
     }
 
     public void giveUserName(String userName) {
+        logger.info(STARTED + getCurrentMethodName());
         userNameField.sendKeys(userName);
+        logger.info(ENDED + getCurrentMethodName());
     }
 
     public void givePassword(String password) {
+        logger.info(STARTED + getCurrentMethodName());
         passwordField.sendKeys(password);
+        logger.info(ENDED + getCurrentMethodName());
     }
 
     public void clickLogin() {
+        logger.info(STARTED + getCurrentMethodName());
         loginButton.click();
+        logger.info(ENDED + getCurrentMethodName());
     }
 }

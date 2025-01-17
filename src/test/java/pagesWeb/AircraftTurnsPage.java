@@ -4,6 +4,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import static constant.CommonConstant.ENDED;
+import static constant.CommonConstant.STARTED;
 
 public class AircraftTurnsPage extends BasePage {
 
@@ -51,66 +53,90 @@ public class AircraftTurnsPage extends BasePage {
     private WebElement deferDetailButton;
 
     public void clickFilterPanelButton() {
+        logger.info(STARTED + getCurrentMethodName());
         filterPanelButton.click();
         System.out.println("User clicked the filter icon");
+        logger.info(ENDED + getCurrentMethodName());
     }
 
     public void clickMoreFieldsButton() {
+        logger.info(STARTED + getCurrentMethodName());
         moreFieldsButton.click();
         System.out.println("User clicked the 'More Fields' button");
+        logger.info(ENDED + getCurrentMethodName());
     }
 
     public void clickArrivalFlightCheckbox() {
+        logger.info(STARTED + getCurrentMethodName());
         if (!arrivalFlightCheckbox.isSelected()) {
             arrivalFlightCheckbox.click();
         }
         System.out.println("Arrival Flight checkbox is selected: " + arrivalFlightCheckbox.isSelected());
+        logger.info(ENDED + getCurrentMethodName());
     }
 
     public void clickParentDiv() {
+        logger.info(STARTED + getCurrentMethodName());
         parentDiv.click();
         System.out.println("User clicked the parent div.");
+        logger.info(ENDED + getCurrentMethodName());
     }
 
     public void enterTextIntoInputField(String text) {
+        logger.info(STARTED + getCurrentMethodName());
         clickParentDiv();
         inputField.clear();
         inputField.sendKeys(text);
         System.out.println("Entered text into the input field: " + text);
+        logger.info(ENDED + getCurrentMethodName());
     }
 
     public void clickButtonRelativeToSpan() {
+        logger.info(STARTED + getCurrentMethodName());
         buttonElement.click();
         System.out.println("User clicked the button relative to the span");
+        logger.info(ENDED + getCurrentMethodName());
     }
 
     public void clickSystemButton() {
+        logger.info(STARTED + getCurrentMethodName());
         systemButton.click();
         System.out.println("User clicked the System button.");
+        logger.info(ENDED + getCurrentMethodName());
     }
 
     public void clickSystemValue() {
+        logger.info(STARTED + getCurrentMethodName());
         systemValue.click();
         System.out.println("User clicked the System value.");
+        logger.info(ENDED + getCurrentMethodName());
     }
 
     public void clickArrivalFlight() {
+        logger.info(STARTED + getCurrentMethodName());
         buttonXpath.click();
         System.out.println("Button clicked.");
+        logger.info(ENDED + getCurrentMethodName());
     }
 
     public void clickDeferredFaultsTab() {
+        logger.info(STARTED + getCurrentMethodName());
         deferredFaultsTab.click();
         System.out.println("Clicked on 'Deferred Faults' tab");
+        logger.info(ENDED + getCurrentMethodName());
     }
 
     public void clickDeferDetailButton() {
+        logger.info(STARTED + getCurrentMethodName());
         deferDetailButton.click();
         System.out.println("Granite Button clicked successfully.");
+        logger.info(ENDED + getCurrentMethodName());
     }
 
     public void clickCommandCell() {
+        logger.info(STARTED + getCurrentMethodName());
         commandCell.click();
         System.out.println("Command cell clicked successfully.");
+        logger.info(ENDED + getCurrentMethodName());
     }
 }

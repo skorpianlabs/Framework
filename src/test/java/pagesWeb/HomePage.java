@@ -4,6 +4,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import static constant.CommonConstant.ENDED;
+import static constant.CommonConstant.STARTED;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -29,28 +31,38 @@ public class HomePage extends BasePage {
     private WebElement navigationToLobby;
 
     public void validateText() {
+        logger.info(STARTED + getCurrentMethodName());
         String textValue = validateTextElement.getText();
         assertEquals("Home", textValue);
+        logger.info(ENDED + getCurrentMethodName());
     }
 
     public void clickNavigationLink() throws InterruptedException {
+        logger.info(STARTED + getCurrentMethodName());
         navigationLink.click();
         System.out.println("Clicked navigation link");
         Thread.sleep(2000);
+        logger.info(ENDED + getCurrentMethodName());
     }
 
     public void navigationSearchKey(String searchKey) {
+        logger.info(STARTED + getCurrentMethodName());
         navigationLink.clear();
         navigationLink.sendKeys(searchKey);
+        logger.info(ENDED + getCurrentMethodName());
     }
 
     public void clickAviationMaintenanceMenu() throws InterruptedException {
+        logger.info(STARTED + getCurrentMethodName());
         navigationToTurns.click();
         System.out.println("Clicked Mobile Maintenance");
         Thread.sleep(5000);
+        logger.info(ENDED + getCurrentMethodName());
     }
 
     public void clickAviationMaintenanceTitleForRF() {
+        logger.info(STARTED + getCurrentMethodName());
         navigationToLobby.click();
+        logger.info(ENDED + getCurrentMethodName());
     }
 }

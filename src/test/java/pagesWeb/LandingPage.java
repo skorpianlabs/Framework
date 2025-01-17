@@ -3,6 +3,8 @@ package pagesWeb;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
+import static constant.CommonConstant.ENDED;
+import static constant.CommonConstant.STARTED;
 
 public class LandingPage extends BasePage  {
 
