@@ -21,9 +21,6 @@ public class AircraftTurnDetailsPage extends BasePage {
     @FindBy(id = "AircraftTurnDetails-TaskList-fndRow-0-fndCommandCell")
     private WebElement RaiseFaultButton;
 
-    @FindBy(xpath = "//fnd-granite-button-wrapper/a/span[2]")
-    private WebElement simpleXpath;
-
     @FindBy(xpath = "//a[@title='Request Deferral']")
     private WebElement requestDeferralButton;
 
@@ -41,21 +38,18 @@ public class AircraftTurnDetailsPage extends BasePage {
     public void captureAndClickRaisedFault() {
         logger.info(STARTED + getCurrentMethodName());
         RaiseFaultButton.click();
-        System.out.println("Element with ID 'AircraftTurnDetails-TaskList-fndRow-0-fndCommandCell' clicked.");
         logger.info(ENDED + getCurrentMethodName());
     }
 
     public void clickDetailsButton() {
         logger.info(STARTED + getCurrentMethodName());
         DetailsButton.click();
-        System.out.println("Element clicked.");
         logger.info(ENDED + getCurrentMethodName());
     }
 
     public void clickRequestDeferralButton() {
         logger.info(STARTED + getCurrentMethodName());
         requestDeferralButton.click();
-        System.out.println("Request Deferral button clicked.");
         logger.info(ENDED + getCurrentMethodName());
     }
 
@@ -70,7 +64,6 @@ public class AircraftTurnDetailsPage extends BasePage {
         logger.info(STARTED + getCurrentMethodName());
         String description = descriptionField.getAttribute("tooltip");
         taskDetailsMap.put("Description", description);
-        System.out.println("Description added to the map");
         logger.info(ENDED + getCurrentMethodName());
     }
 

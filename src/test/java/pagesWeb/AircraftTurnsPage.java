@@ -29,7 +29,7 @@ public class AircraftTurnsPage extends BasePage {
     private WebElement parentDiv;
 
     @FindBy(css = "#MyAircraftTurnsCardPage-FlightsList-filterPane-fndFieldFilter-LegNo-optionsPane input")
-    private WebElement LegNoinputField;
+    private WebElement legNoinputField;
 
     @FindBy(xpath = "//span[@data-fnd='card-title-label' and text()='YOW - IFSAD-1524 - (AIRLINE)']/following::button[@type='button' and contains(@class, 'button')]")
     private WebElement turnSelectionButton;
@@ -38,10 +38,10 @@ public class AircraftTurnsPage extends BasePage {
     private WebElement systemButton;
 
     @FindBy(xpath = "//span[text()='INTRODUCTION']")
-    private WebElement systemValue;
+    private WebElement systemValueField;
 
     @FindBy(xpath = "//*[@id='MyAircraftTurnsCardPage-FlightsList-filterPane-fndFieldFilter-LegNo']/div/fnd-filter-badge/fnd-filter-badge-content/div/div")
-    private WebElement buttonXpath;
+    private WebElement arraivalFlightButton;
 
     @FindBy(xpath = "//div[@role='tab' and @aria-controls='Deferred Faults' and text()=' Deferred Faults ']")
     private WebElement deferredFaultsTab;
@@ -85,8 +85,8 @@ public class AircraftTurnsPage extends BasePage {
     public void enterTextIntoInputField(String text) {
         logger.info(STARTED + getCurrentMethodName());
         clickParentDiv();
-        LegNoinputField.clear();
-        LegNoinputField.sendKeys(text);
+        legNoinputField.clear();
+        legNoinputField.sendKeys(text);
         System.out.println("Entered text into the input field: " + text);
         logger.info(ENDED + getCurrentMethodName());
     }
@@ -107,14 +107,14 @@ public class AircraftTurnsPage extends BasePage {
 
     public void clickSystemValue() {
         logger.info(STARTED + getCurrentMethodName());
-        systemValue.click();
+        systemValueField.click();
         System.out.println("User clicked the System value.");
         logger.info(ENDED + getCurrentMethodName());
     }
 
     public void clickArrivalFlight() {
         logger.info(STARTED + getCurrentMethodName());
-        buttonXpath.click();
+        arraivalFlightButton.click();
         System.out.println("Button clicked.");
         logger.info(ENDED + getCurrentMethodName());
     }

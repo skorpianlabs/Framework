@@ -23,14 +23,8 @@ public class RaiseFault extends BasePage {
     @FindBy(xpath = "//label[@title='System']/following::button//i")
     private WebElement systemButton;
 
-    @FindBy(xpath = "//span[text()='INTRODUCTION']")
-    private WebElement systemValue;
-
     @FindBy(xpath = "//label[@title='Aircraft']/following::button//i")
-    private WebElement aircraftInputField;
-
-    @FindBy(xpath = "//span[contains(@class, 'value wrap-content') and text()='IFSAD-2000 (737-NG)']")
-    private WebElement ifsadTextSpan;
+    private WebElement aircraftButton;
 
     @FindBy(xpath = "//button[@title='Raise Fault']")
     private WebElement raiseFaultButton;
@@ -38,30 +32,49 @@ public class RaiseFault extends BasePage {
     @FindBy(xpath = "//label[@title='Fault Source']/following::button//i")
     private WebElement faultSourceButton;
 
-    @FindBy(xpath = "//span[text()='AUTH']")
-    private WebElement faultSourceValue;
-
     @FindBy(xpath = "//label[@title='Fault Severity']/following::button//i")
     private WebElement faultSeverityButton;
 
-    @FindBy(xpath = "//span[text()='MEL']")
-    private WebElement faultSeverityValue;
-
     @FindBy(xpath = "//label[@title='Description']/following::textarea")
-    private WebElement descriptionField;
+    private WebElement descriptionFieldInputField;
 
     @FindBy(xpath = "//*[@id='RaiseFaultAssistant-fndToolbar-action-fndButton-RaiseFaultAssistant_RaiseFault-button']")
     private WebElement okButton;
 
+    @FindBy(xpath = "//label[@title='Aircraft']/following::input")
+    private WebElement aircraftInputField;
+
+    @FindBy(xpath = "//label[@title='System']/following::input")
+    private WebElement systemInputField;
+
+    @FindBy(xpath = "//label[@title='Fault Source']/following::input")
+    private WebElement faultSourceInputField;
+
+    @FindBy(xpath = "//label[@title='Logbook Type']/following::input")
+    private WebElement logbookTypeInputField;
+
+    @FindBy(xpath = "//label[@title='Logbook Reference']/following::input")
+    private WebElement logbookReferenceInputField;
+
+    @FindBy(xpath = "//label[@title='Found During Flight']/following::input")
+    private WebElement foundDuringFlightInputField;
+
+    @FindBy(xpath = "//label[@title='Phase of Flight']/following::input")
+    private WebElement phaseOfFlightInputField;
+
+    @FindBy(xpath = "//label[@title='Fault Type']/following::input")
+    private WebElement faultTypeInputField;
+
+    @FindBy(xpath = "//label[@title='Fault Severity']/following::input")
+    private WebElement faultSeverityInputField;
+
+    @FindBy(xpath = "//label[@title='Fault Code']/following::input")
+    private WebElement faultCodeInputField;
+
+
     public void clickButtonRelativeToLabelSystem() {
         logger.info(STARTED + getCurrentMethodName());
         systemButton.click();
-        logger.info(ENDED + getCurrentMethodName());
-    }
-
-    public void captureSelectedValueSystem() {
-        logger.info(STARTED + getCurrentMethodName());
-        systemValue.click();
         logger.info(ENDED + getCurrentMethodName());
     }
 
@@ -84,28 +97,16 @@ public class RaiseFault extends BasePage {
         logger.info(ENDED + getCurrentMethodName());
     }
 
-    public void captureSelectedValueFaultSource() {
-        logger.info(STARTED + getCurrentMethodName());
-        faultSourceValue.click();
-        logger.info(ENDED + getCurrentMethodName());
-    }
-
     public void clickButtonRelativeToFaultSeverity() {
         logger.info(STARTED + getCurrentMethodName());
         faultSeverityButton.click();
         logger.info(ENDED + getCurrentMethodName());
     }
 
-    public void captureSelectedValueFaultSeverity() {
-        logger.info(STARTED + getCurrentMethodName());
-        faultSeverityValue.click();
-        logger.info(ENDED + getCurrentMethodName());
-    }
-
     public void enterDescription(String descriptionText) {
         logger.info(STARTED + getCurrentMethodName());
-        descriptionField.clear();
-        descriptionField.sendKeys(descriptionText);
+        descriptionFieldInputField.clear();
+        descriptionFieldInputField.sendKeys(descriptionText);
         logger.info(ENDED + getCurrentMethodName());
     }
 
@@ -120,15 +121,78 @@ public class RaiseFault extends BasePage {
         logger.info(STARTED + getCurrentMethodName());
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.elementToBeClickable(aircraftInputField));
-        aircraftInputField.click();
+        aircraftButton.click();
+        logger.info(ENDED + getCurrentMethodName());
+    }
+    public void enterAircraft(String aircraftText) {
+        logger.info(STARTED + getCurrentMethodName());
+        aircraftInputField.clear();
+        aircraftInputField.sendKeys(aircraftText);
         logger.info(ENDED + getCurrentMethodName());
     }
 
-    public void clickIFSADText() {
+    public void enterSystem(String systemText) {
         logger.info(STARTED + getCurrentMethodName());
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.elementToBeClickable(ifsadTextSpan));
-        ifsadTextSpan.click();
+        systemInputField.clear();
+        systemInputField.sendKeys(systemText);
         logger.info(ENDED + getCurrentMethodName());
     }
+
+    public void enterFaultSource(String faultSourceText) {
+        logger.info(STARTED + getCurrentMethodName());
+        faultSourceInputField.clear();
+        faultSourceInputField.sendKeys(faultSourceText);
+        logger.info(ENDED + getCurrentMethodName());
+    }
+
+    public void enterLogbookType(String logbookTypeText) {
+        logger.info(STARTED + getCurrentMethodName());
+        logbookTypeInputField.clear();
+        logbookTypeInputField.sendKeys(logbookTypeText);
+        logger.info(ENDED + getCurrentMethodName());
+    }
+
+    public void enterLogbookReference(String logbookReferenceText) {
+        logger.info(STARTED + getCurrentMethodName());
+        logbookReferenceInputField.clear();
+        logbookReferenceInputField.sendKeys(logbookReferenceText);
+        logger.info(ENDED + getCurrentMethodName());
+    }
+
+    public void enterFoundDuringFlight(String foundDuringFlightText) {
+        logger.info(STARTED + getCurrentMethodName());
+        foundDuringFlightInputField.clear();
+        foundDuringFlightInputField.sendKeys(foundDuringFlightText);
+        logger.info(ENDED + getCurrentMethodName());
+    }
+
+    public void enterPhaseOfFlight(String phaseOfFlightText) {
+        logger.info(STARTED + getCurrentMethodName());
+        phaseOfFlightInputField.clear();
+        phaseOfFlightInputField.sendKeys(phaseOfFlightText);
+        logger.info(ENDED + getCurrentMethodName());
+    }
+
+    public void enterFaultType(String faultTypeText) {
+        logger.info(STARTED + getCurrentMethodName());
+        faultTypeInputField.clear();
+        faultTypeInputField.sendKeys(faultTypeText);
+        logger.info(ENDED + getCurrentMethodName());
+    }
+
+    public void enterFaultSeverity(String faultSeverityText) {
+        logger.info(STARTED + getCurrentMethodName());
+        faultSeverityInputField.clear();
+        faultSeverityInputField.sendKeys(faultSeverityText);
+        logger.info(ENDED + getCurrentMethodName());
+    }
+
+    public void enterFaultCode(String faultCodeText) {
+        logger.info(STARTED + getCurrentMethodName());
+        faultCodeInputField.clear();
+        faultCodeInputField.sendKeys(faultCodeText);
+        logger.info(ENDED + getCurrentMethodName());
+    }
+
+
 }

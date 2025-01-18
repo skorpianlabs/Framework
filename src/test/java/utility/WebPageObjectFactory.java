@@ -10,7 +10,6 @@ public class WebPageObjectFactory {
     // Initialize page objects here
     private LoginPage loginPage;
     private RaiseFault raiseFault;
-    private LandingPage landingPage;
     private HomePage homePage;
     private AircraftTurnsPage aircraftTurnsPage;
     private AircraftTurnDetailsPage aircraftTurnDetailsPage;
