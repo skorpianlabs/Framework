@@ -44,6 +44,7 @@ public class RaiseFaultAPI {
         // Set the base URL for RaiseFault request
         String url = "https://ifsmxmm24r2bntcmb.rnd.ifsdevworld.com/main/ifsapplications/projection/v1/FlmAircraftTurnsDetailsHandling.svc/RaiseFaultVirtualSet";
 
+
         // Create the body (JSON data) for the RaiseFault request
         String jsonBody = "{\n" +
                 "  \"AircraftId\": 1090,\n" +  // Integer value without quotes

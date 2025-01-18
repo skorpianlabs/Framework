@@ -13,6 +13,13 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <java.version>1.8</java.version>
+        <restassuredVersion>5.3.0</restassuredVersion>
+        <testngVersion>7.7.0</testngVersion>
+        <gsonVersion>2.10</gsonVersion>
+        <extentVersion>5.0.9</extentVersion>
+        <datafakerVersion>1.8.0</datafakerVersion>
+        <apacheCommonLangVersion>3.12.0</apacheCommonLangVersion>
+        <javersVersion>6.12.0</javersVersion>
     </properties>
 
 
@@ -99,6 +106,25 @@
             <artifactId>log4j-api</artifactId>
             <version>2.22.0</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/io.rest-assured/rest-assured -->
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <version>${restassuredVersion}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>2.18.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.18.0</version> <!-- Ensure this version matches your jackson-core version -->
+        </dependency>
+
+
     </dependencies>
 
     <build>

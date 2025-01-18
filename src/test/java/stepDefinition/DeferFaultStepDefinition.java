@@ -1,5 +1,7 @@
 package stepDefinition;
 
+import APIServiceLayer.RaiseFaultAPI;
+import io.restassured.response.Response;
 import serviceLayer.RaiseFaultWebService;
 import com.google.inject.Inject;
 import io.cucumber.datatable.DataTable;
@@ -22,6 +24,9 @@ public class DeferFaultStepDefinition {
     @Inject
     protected RaiseFaultWebService raiseFaultWebService;
 
+    @Inject
+    protected RaiseFaultAPI raiseFaultAPI;
+
     private String channel;
 
 
@@ -31,15 +36,16 @@ public class DeferFaultStepDefinition {
         channel= channelDecider.findPlatform(dataTable);
         if (channel.equals("web"))  {
             raiseFaultWebService.raiseAFault(dataTable);
+            assertEquals("ABC", raiseFaultWebService.assertRaisedFaultFromTurn());
         }
         if (channel.equals("mobile")){
 
             System.out.println("For mobile implementation");
         }
         else{
-            System.out.println("use API path");
+            Response response = raiseFaultAPI.sendRaiseFaultRequest(dataTable);
         }
-        assertEquals("ABC", raiseFaultWebService.assertRaisedFaultFromTurn());
+
 
     }
 
