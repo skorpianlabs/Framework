@@ -7,7 +7,6 @@ public class BasePage {
 
     public final Logger logger = LogManager.getLogger(BasePage.class);
 
-
 /**
  * Method for getting the current executing method name
  */
