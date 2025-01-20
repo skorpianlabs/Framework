@@ -1,7 +1,7 @@
-package serviceLayer;
+package com.and.webservice;
 
 import io.cucumber.datatable.DataTable;
-import stepDefinition.WebDriverProvider;
+import com.and.utility.WebDriverProvider;
 import static com.and.constant.CommonConstant.ENDED;
 import static com.and.constant.CommonConstant.STARTED;
 

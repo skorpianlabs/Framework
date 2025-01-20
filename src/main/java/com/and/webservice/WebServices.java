@@ -1,7 +1,7 @@
-package serviceLayer;
+package com.and.webservice;
 
 import io.cucumber.datatable.DataTable;
-import stepDefinition.WebDriverProvider;
+import com.and.utility.WebDriverProvider;
 import static com.and.constant.CommonConstant.ENDED;
 import static com.and.constant.CommonConstant.STARTED;
 
@@ -72,7 +72,7 @@ public class WebServices extends BaseService {
             webPageObjectFactory.getHomePageService().navigationSearchKey(searchKey);
             webPageObjectFactory.getHomePageService().clickAviationMaintenanceMenu();
             webPageObjectFactory.getAircraftTurnsPageService().clickFilterPanelButton();
-            webPageObjectFactory.getAircraftTurnsPageService().clickArrivalFlight();
+            webPageObjectFactory.getAircraftTurnsPageService().clickTurnMenuItem("Arrival Flight");
             webPageObjectFactory.getAircraftTurnsPageService().enterTextIntoInputField(inputFieldText);
             webPageObjectFactory.getAircraftTurnsPageService().clickSelectedTurn();
 

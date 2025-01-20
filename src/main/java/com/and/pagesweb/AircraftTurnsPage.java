@@ -1,11 +1,17 @@
-package com.and.and.pagesweb;
+package com.and.pagesweb;
 
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import static com.and.and.constant.CommonConstant.ENDED;
-import static com.and.and.constant.CommonConstant.STARTED;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
+
+import static com.and.constant.CommonConstant.ENDED;
+import static com.and.constant.CommonConstant.STARTED;
 
 public class AircraftTurnsPage extends BasePage {
 
@@ -22,8 +28,8 @@ public class AircraftTurnsPage extends BasePage {
     @FindBy(id = "MyAircraftTurnsCardPage-FlightsList-filterPane-fndMoreFieldsButton-moreButton")
     private WebElement moreFieldsButton;
 
-    @FindBy(id = "MyAircraftTurnsCardPage-FlightsList-filterPane-fndMoreFieldsButton-LegNo")
-    private WebElement arrivalFlightCheckbox;
+    @FindBy(id = "MyAircraftTurnsCardPage-FlightsList-filterPane-fndFieldFilter-LegNo")
+    private WebElement arrivalFlightButtonPanel;
 
     @FindBy(id = "MyAircraftTurnsCardPage-FlightsList-filterPane-fndFieldFilter-LegNo-optionsPane")
     private WebElement parentDiv;
@@ -52,6 +58,13 @@ public class AircraftTurnsPage extends BasePage {
     @FindBy(id = "AircraftTurnDetails-DeferredFaultsListInStandalone-fndRow-0-fndCommandCell-fndCommandDropdown-fndMenu-Details-fndButton-button")
     private WebElement deferDetailButton;
 
+    @FindBy(xpath = "//input[@placeholder='Filter fields']")
+    private WebElement filterFieldsInput;
+
+
+    @FindBy(xpath = "//label[contains(text(),'Arrival Flight')]/child::i")
+    private WebElement arrivalFlightFilterButton;
+
     public void clickFilterPanelButton() {
         logger.info(STARTED + getCurrentMethodName());
         filterPanelButton.click();
@@ -66,12 +79,32 @@ public class AircraftTurnsPage extends BasePage {
         logger.info(ENDED + getCurrentMethodName());
     }
 
-    public void clickArrivalFlightCheckbox() {
+    public void clickTurnMenuItem(String field) {
         logger.info(STARTED + getCurrentMethodName());
-        if (!arrivalFlightCheckbox.isSelected()) {
-            arrivalFlightCheckbox.click();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(2));
+        boolean searchField = false;
+        try {
+            //check the given field is already visible in the panel
+            if (field.equals("Arrival Flight")) {
+                WebElement arrivalFlightField = wait.until(ExpectedConditions.visibilityOf(arrivalFlightButtonPanel));
+                searchField = arrivalFlightField.isDisplayed();
+            }
+        } catch (TimeoutException e) {
+            // If the checkbox is not visible within the timeout, fallback to other methods
+            searchField = false;
         }
-        System.out.println("Arrival Flight checkbox is selected: " + arrivalFlightCheckbox.isSelected());
+        if (searchField) {
+            clickArrivalFlight();
+        } else {
+            //If given field is not visible select from more button
+            clickMoreFieldsButton();
+            enterFilterFields(field);
+            if (field.equals("Arrival Flight"))
+            {
+                clickArrivalFlightFilterButton();
+            }
+
+        }
         logger.info(ENDED + getCurrentMethodName());
     }
 
@@ -137,6 +170,18 @@ public class AircraftTurnsPage extends BasePage {
         logger.info(STARTED + getCurrentMethodName());
         commandCell.click();
         System.out.println("Command cell clicked successfully.");
+        logger.info(ENDED + getCurrentMethodName());
+    }
+    public void enterFilterFields(String filterText) {
+        logger.info(STARTED + getCurrentMethodName());
+        filterFieldsInput.sendKeys(filterText);
+        System.out.println("User entered text in the filter fields: " + filterText);
+        logger.info(ENDED + getCurrentMethodName());
+    }
+    public void clickArrivalFlightFilterButton() {
+        logger.info(STARTED + getCurrentMethodName());
+        arrivalFlightFilterButton.click();
+        System.out.println("User clicked the Arrival Flight filter button");
         logger.info(ENDED + getCurrentMethodName());
     }
 }

@@ -1,6 +1,6 @@
-package com.and.and.apiservice;
+package com.and.apiservice;
 
-import PojoAPI.Fault;
+import com.and.PojoAPI.Fault;
 import io.cucumber.datatable.DataTable;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;

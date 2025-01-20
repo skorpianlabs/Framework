@@ -1,4 +1,4 @@
-package com.and.and.pagesweb;
+package com.and.pagesweb;
 
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;

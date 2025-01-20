@@ -1,9 +1,9 @@
-package serviceLayer;
+package com.and.webservice;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
-import stepDefinition.WebDriverProvider;
+import com.and.utility.WebDriverProvider;
 import com.and.utility.WebPageObjectFactory;
 
 public  class BaseService {

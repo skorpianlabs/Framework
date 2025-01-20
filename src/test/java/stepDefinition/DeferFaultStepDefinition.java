@@ -1,14 +1,14 @@
 package stepDefinition;
 
-import APIServiceLayer.RaiseFaultAPI;
+import com.and.apiservice.RaiseFaultAPI;
 import io.restassured.response.Response;
-import serviceLayer.RaiseFaultWebService;
+import com.and.webservice.RaiseFaultWebService;
 import com.google.inject.Inject;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
 import org.openqa.selenium.WebDriver;
-import serviceLayer.ChannelDecider;
-import serviceLayer.WebServices;
+import com.and.webservice.ChannelDecider;
+import com.and.webservice.WebServices;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class DeferFaultStepDefinition {

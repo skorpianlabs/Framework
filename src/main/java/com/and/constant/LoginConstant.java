@@ -1,6 +1,6 @@
-package com.and.and.constant;
+package com.and.constant;
 
-import utility.LoginUtils;
+import com.and.utility.LoginUtils;
 
 import java.io.IOException;
 

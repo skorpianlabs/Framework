@@ -1,4 +1,4 @@
-package com.and.and.constant;
+package com.and.constant;
 
 public class TimeWaitConstant {
 

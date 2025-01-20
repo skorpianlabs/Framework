@@ -1,4 +1,4 @@
-package com.and.and.constant;
+package com.and.constant;
 
 public class CommonConstant {
     public static final String RELEASE_APP_TITLE = "IFS Maintenance for Aviation";

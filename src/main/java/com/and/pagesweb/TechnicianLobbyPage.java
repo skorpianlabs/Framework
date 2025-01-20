@@ -1,11 +1,11 @@
-package com.and.and.pagesweb;
+package com.and.pagesweb;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import static com.and.and.constant.CommonConstant.ENDED;
-import static com.and.and.constant.CommonConstant.STARTED;
+import static com.and.constant.CommonConstant.ENDED;
+import static com.and.constant.CommonConstant.STARTED;
 
 public class TechnicianLobbyPage extends BasePage {
 

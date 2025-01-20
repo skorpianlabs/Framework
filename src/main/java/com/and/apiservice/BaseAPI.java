@@ -1,6 +1,6 @@
-package com.and.and.apiservice;
+package com.and.apiservice;
 
-import PojoAPI.APIConfigData;
+import com.and.PojoAPI.APIConfigData;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
