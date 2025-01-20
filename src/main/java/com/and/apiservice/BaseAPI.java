@@ -1,4 +1,4 @@
-package APIServiceLayer;
+package com.and.and.apiservice;
 
 import PojoAPI.APIConfigData;
 import com.fasterxml.jackson.databind.ObjectMapper;

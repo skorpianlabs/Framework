@@ -1,4 +1,4 @@
-package pagesWeb;
+package com.and.and.pagesweb;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

@@ -1,8 +1,8 @@
 package utility;
 
 
+import com.and.pagesweb.*;
 import org.openqa.selenium.WebDriver;
-import pagesWeb.*;
 
 public class WebPageObjectFactory {
     private WebDriver driver;

@@ -1,11 +1,11 @@
-package pagesWeb;
+package com.and.and.pagesweb;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import static constant.CommonConstant.ENDED;
-import static constant.CommonConstant.STARTED;
+import static com.and.and.constant.CommonConstant.ENDED;
+import static com.and.and.constant.CommonConstant.STARTED;
 
 public class LoginPage extends BasePage {
 

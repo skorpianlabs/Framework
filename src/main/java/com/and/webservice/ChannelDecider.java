@@ -2,8 +2,8 @@ package serviceLayer;
 
 import io.cucumber.datatable.DataTable;
 import stepDefinition.WebDriverProvider;
-import static constant.CommonConstant.ENDED;
-import static constant.CommonConstant.STARTED;
+import static com.and.constant.CommonConstant.ENDED;
+import static com.and.constant.CommonConstant.STARTED;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
