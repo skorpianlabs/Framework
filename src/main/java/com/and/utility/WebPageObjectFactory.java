@@ -14,6 +14,7 @@ public class WebPageObjectFactory {
     private AircraftTurnsPage aircraftTurnsPage;
     private AircraftTurnDetailsPage aircraftTurnDetailsPage;
     private TechnicianLobbyPage technicianLobbyPage;
+    private DBCallExecuter dbCallExecuter;
 
     // Constructor to initialize the driver
     public WebPageObjectFactory(WebDriver driver) {
@@ -54,6 +55,12 @@ public class WebPageObjectFactory {
             technicianLobbyPage = new TechnicianLobbyPage(driver);
         }
         return technicianLobbyPage;
+    }
+    public DBCallExecuter getDbCallExecuterService() {
+        if (dbCallExecuter == null) {
+            dbCallExecuter = new DBCallExecuter();
+        }
+        return dbCallExecuter;
     }
 }
 

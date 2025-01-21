@@ -8,6 +8,8 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
@@ -17,13 +19,13 @@ public class WebDriverProvider {
     // Map to store the WebDriver instances for each thread
     private static final Map<Long, WebDriver> chromeDriverMap = new HashMap<>();
     private static final Map<Long, WebDriver> mobileDriverMap = new HashMap<>();
-  //  private static Injector injector;
+    private static final Map<Long, Connection> connectionMap = new HashMap<>();
+    private static DBConnectionManger dbConnectionManger;
 
     // @Before hook to initialize both ChromeDriver and EdgeDriver for each thread
     @Before
     public static void initializeDriver() {
 
-    //    injector = Guice.createInjector(new PageObjectModule());
         long threadId = Thread.currentThread().getId();
 
         // Initialize ChromeDriver if not already initialized
@@ -42,6 +44,21 @@ public class WebDriverProvider {
             edgeDriver.manage().window().maximize();
             mobileDriverMap.put(threadId, edgeDriver);
         }*/
+
+        if (dbConnectionManger == null) {
+            dbConnectionManger = new DBConnectionManger("src/test/java/database.properties");
+        }
+
+        // Initialize the database connection if not already initialized for this thread
+        if (!connectionMap.containsKey(threadId)) {
+            try {
+                Connection connection = dbConnectionManger.getConnection();
+                connectionMap.put(threadId, connection);
+            } catch (SQLException e) {
+                e.printStackTrace();
+                throw new RuntimeException("Failed to get database connection for thread " + threadId, e);
+            }
+        }
     }
 
     // Method to get ChromeDriver for the current thread
@@ -54,6 +71,10 @@ public class WebDriverProvider {
         return mobileDriverMap.get(Thread.currentThread().getId());
     }
 
+    public static Connection getConnection() {
+        return connectionMap.get(Thread.currentThread().getId());
+    }
+
     // @After hook to quit both drivers after each scenario
     @After
     public static void quitDriver(Scenario scenario) {
@@ -62,8 +83,8 @@ public class WebDriverProvider {
         // Quit ChromeDriver if it exists
         WebDriver chromeDriver = chromeDriverMap.get(threadId);
         if (chromeDriver != null) {
-            if(scenario.isFailed()){
-                final byte[] scrnShot = ((TakesScreenshot)chromeDriver).getScreenshotAs(OutputType.BYTES);
+            if (scenario.isFailed()) {
+                final byte[] scrnShot = ((TakesScreenshot) chromeDriver).getScreenshotAs(OutputType.BYTES);
                 scenario.attach(scrnShot, "image/png", scenario.getName());
             }
             chromeDriver.quit();
@@ -76,5 +97,18 @@ public class WebDriverProvider {
             edgeDriver.quit();
             mobileDriverMap.remove(threadId);
         }
+        // Close the database connection if it exists
+        Connection connection = connectionMap.get(threadId);
+        if (connection != null) {
+            try {
+                if (!connection.isClosed()) {
+                    connection.close(); // Return the connection to the pool
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            connectionMap.remove(threadId);
+        }
+
     }
 }

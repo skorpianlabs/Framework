@@ -1,0 +1,29 @@
+package com.and.utility;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+public class DBCallExecuter {
+
+    public  ResultSet executeQuery(String query) {
+        Connection connection = WebDriverProvider.getConnection();
+
+        if (connection != null) {
+            try {
+                // Create a PreparedStatement with the provided query
+                PreparedStatement preparedStatement = connection.prepareStatement(query);
+
+                return preparedStatement.executeQuery();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("Connection is not available.");
+        }
+
+        return null;
+    }
+
+}
