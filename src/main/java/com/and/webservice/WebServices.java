@@ -1,11 +1,10 @@
 package com.and.webservice;
 
 import io.cucumber.datatable.DataTable;
-import com.and.utility.WebDriverProvider;
+import com.and.utility.DriverProvider;
 import static com.and.constant.CommonConstant.ENDED;
 import static com.and.constant.CommonConstant.STARTED;
 
-import java.sql.ResultSet;
 import java.util.List;
 import java.util.Map;
 
@@ -14,7 +13,7 @@ public class WebServices extends BaseService {
     String description;
 
     public WebServices() {
-        super(WebDriverProvider.getChromeDriver());
+        super(DriverProvider.getChromeDriver());
         setupPageFactory();
     }
 

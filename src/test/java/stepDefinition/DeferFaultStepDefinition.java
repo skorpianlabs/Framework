@@ -1,6 +1,8 @@
 package stepDefinition;
 
 import com.and.apiservice.RaiseFaultAPI;
+import com.and.nativeService.NativeServices;
+import com.and.nativeService.RaiseFaultNativeService;
 import io.restassured.response.Response;
 import com.and.webservice.RaiseFaultWebService;
 import com.google.inject.Inject;
@@ -19,6 +21,9 @@ public class DeferFaultStepDefinition {
     protected WebServices webservices;
 
     @Inject
+    protected NativeServices nativeServices;
+
+    @Inject
     protected ChannelDecider channelDecider;
 
     @Inject
@@ -26,6 +31,9 @@ public class DeferFaultStepDefinition {
 
     @Inject
     protected RaiseFaultAPI raiseFaultAPI;
+
+    @Inject
+    protected RaiseFaultNativeService raiseFaultNativeService;
 
     private String channel;
 
@@ -39,13 +47,11 @@ public class DeferFaultStepDefinition {
             assertEquals("ABC", raiseFaultWebService.assertRaisedFaultFromTurn());
         }
         if (channel.equals("mobile")){
-
-            System.out.println("For mobile implementation");
+            raiseFaultNativeService.raiseAFault(dataTable);
         }
         else{
             Response response = raiseFaultAPI.sendRaiseFaultRequest(dataTable);
         }
-
 
     }
 
@@ -63,8 +69,7 @@ public class DeferFaultStepDefinition {
             webservices.routeToLoginDetailsPage(dataTable);
         }
         if (channel.equals("mobile")){
-
-            System.out.println("For mobile implementation");
+            nativeServices.routeToLoginDetailsPage(dataTable);
         }
         else{
             System.out.println("use API path");

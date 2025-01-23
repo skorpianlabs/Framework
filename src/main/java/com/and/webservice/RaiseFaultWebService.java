@@ -1,7 +1,7 @@
 package com.and.webservice;
 
 import io.cucumber.datatable.DataTable;
-import com.and.utility.WebDriverProvider;
+import com.and.utility.DriverProvider;
 import static com.and.constant.CommonConstant.ENDED;
 import static com.and.constant.CommonConstant.STARTED;
 
@@ -14,7 +14,7 @@ public class RaiseFaultWebService extends BaseService {
     WebServices webServices = new WebServices();
 
     public RaiseFaultWebService() {
-        super(WebDriverProvider.getChromeDriver());
+        super(DriverProvider.getChromeDriver());
         setupPageFactory();
     }
 

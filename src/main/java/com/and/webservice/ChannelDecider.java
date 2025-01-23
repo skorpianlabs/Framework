@@ -1,7 +1,7 @@
 package com.and.webservice;
 
 import io.cucumber.datatable.DataTable;
-import com.and.utility.WebDriverProvider;
+import com.and.utility.DriverProvider;
 import static com.and.constant.CommonConstant.ENDED;
 import static com.and.constant.CommonConstant.STARTED;
 import org.apache.logging.log4j.LogManager;
@@ -15,7 +15,7 @@ public class ChannelDecider extends BaseService {
     private static final Logger logger = LogManager.getLogger(ChannelDecider.class);
 
     public ChannelDecider() {
-        super(WebDriverProvider.getChromeDriver());
+        super(DriverProvider.getChromeDriver());
     }
 
     public String findPlatform(DataTable dataTable) {
