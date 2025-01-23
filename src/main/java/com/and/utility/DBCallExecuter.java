@@ -8,7 +8,7 @@ import java.sql.SQLException;
 public class DBCallExecuter {
 
     public  ResultSet executeQuery(String query) {
-        Connection connection = WebDriverProvider.getConnection();
+        Connection connection = DriverProvider.getConnection();
 
         if (connection != null) {
             try {

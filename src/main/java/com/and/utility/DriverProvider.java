@@ -1,5 +1,8 @@
 package com.and.utility;
 
+import com.and.utility.nativeUtil.Capabilities;
+import com.google.inject.Inject;
+import io.appium.java_client.ios.IOSDriver;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
@@ -8,23 +11,28 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
 
-public class WebDriverProvider {
+public class DriverProvider {
 
     // Map to store the WebDriver instances for each thread
     private static final Map<Long, WebDriver> chromeDriverMap = new HashMap<>();
     private static final Map<Long, WebDriver> mobileDriverMap = new HashMap<>();
     private static final Map<Long, Connection> connectionMap = new HashMap<>();
+    private static final Map<Long, IOSDriver> iOSDriverMap = new HashMap<>();
+    @Inject
+    private static Capabilities capabilities;
     private static DBConnectionManger dbConnectionManger;
 
     // @Before hook to initialize both ChromeDriver and EdgeDriver for each thread
     @Before
-    public static void initializeDriver() {
+    public static void initializeDriver() throws MalformedURLException {
 
         long threadId = Thread.currentThread().getId();
 
@@ -37,13 +45,12 @@ public class WebDriverProvider {
             chromeDriverMap.put(threadId, chromeDriver);
         }
 
-        // Initialize mobile if not already initialized
-        /*if (!mobileDriverMap.containsKey(threadId)) {
-            WebDriver edgeDriver = new EdgeDriver();
-            edgeDriver.get("https://ifsmxmm24r2dev3cmb.rnd.ifsdevworld.com/");
-            edgeDriver.manage().window().maximize();
-            mobileDriverMap.put(threadId, edgeDriver);
-        }*/
+        if (!iOSDriverMap.containsKey(threadId)) {
+            IOSDriver iOSDriver = new IOSDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities.getCapabilities());
+
+            iOSDriverMap.put(threadId, iOSDriver);
+
+        }
 
         if (dbConnectionManger == null) {
             dbConnectionManger = new DBConnectionManger("src/test/java/database.properties");
@@ -89,6 +96,17 @@ public class WebDriverProvider {
             }
             chromeDriver.quit();
             chromeDriverMap.remove(threadId);
+        }
+
+        // Quit IOSDriver if it exists
+        IOSDriver iosDriver = iOSDriverMap.get(threadId);
+        if (iosDriver != null) {
+            if (scenario.isFailed()) {
+                final byte[] scrnShot = ((TakesScreenshot) iosDriver).getScreenshotAs(OutputType.BYTES);
+                scenario.attach(scrnShot, "image/png", scenario.getName());
+            }
+            iosDriver.quit();
+            iOSDriverMap.remove(threadId);
         }
 
         // Quit EdgeDriver if it exists

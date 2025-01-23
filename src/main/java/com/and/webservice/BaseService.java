@@ -3,7 +3,7 @@ package com.and.webservice;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
-import com.and.utility.WebDriverProvider;
+import com.and.utility.DriverProvider;
 import com.and.utility.WebPageObjectFactory;
 
 public  class BaseService {
@@ -15,7 +15,7 @@ public  class BaseService {
 
     // Constructor to initialize the WebDriver
     public BaseService(WebDriver driver) {
-        this.driver =WebDriverProvider.getChromeDriver() ;
+        this.driver = DriverProvider.getChromeDriver() ;
     }
 
     // Setup the PageObjectFactory
