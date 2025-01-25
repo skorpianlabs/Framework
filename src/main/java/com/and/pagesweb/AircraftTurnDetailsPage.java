@@ -13,7 +13,9 @@ public class AircraftTurnDetailsPage extends BasePage {
 
     private WebDriver driver;
 
-    public AircraftTurnDetailsPage(WebDriver driver) {
+    public AircraftTurnDetailsPage(WebDriver driver)
+
+    {
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }

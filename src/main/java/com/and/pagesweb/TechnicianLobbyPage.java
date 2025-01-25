@@ -19,9 +19,19 @@ public class TechnicianLobbyPage extends BasePage {
     @FindBy(xpath = "//div[contains(@class, 'lobby-text-area') and text()='Raise Fault']")
     private WebElement raiseFaultButton;
 
+    @FindBy(xpath = "//span[@class='title ng-star-inserted' and text()='Fault Search']")
+    private WebElement faultSearchTitle;
+
+
     public void clickRaiseFault() {
         logger.info(STARTED + getCurrentMethodName());
         raiseFaultButton.click();
+        logger.info(ENDED + getCurrentMethodName());
+    }
+
+    public void faultSearchTitle() {
+        logger.info(STARTED + getCurrentMethodName());
+        faultSearchTitle.click();
         logger.info(ENDED + getCurrentMethodName());
     }
 }

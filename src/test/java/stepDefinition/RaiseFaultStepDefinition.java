@@ -1,8 +1,7 @@
 package stepDefinition;
 
 import com.and.apiservice.RaiseFaultAPI;
-import com.and.nativeService.NativeServices;
-import com.and.nativeService.RaiseFaultNativeService;
+import io.cucumber.java.en.Then;
 import io.restassured.response.Response;
 import com.and.webservice.RaiseFaultWebService;
 import com.google.inject.Inject;
@@ -13,15 +12,12 @@ import com.and.webservice.ChannelDecider;
 import com.and.webservice.WebServices;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class DeferFaultStepDefinition {
+public class RaiseFaultStepDefinition {
 
     private WebDriver driver;
 
     @Inject
     protected WebServices webservices;
-
-    @Inject
-    protected NativeServices nativeServices;
 
     @Inject
     protected ChannelDecider channelDecider;
@@ -32,10 +28,8 @@ public class DeferFaultStepDefinition {
     @Inject
     protected RaiseFaultAPI raiseFaultAPI;
 
-    @Inject
-    protected RaiseFaultNativeService raiseFaultNativeService;
-
     private String channel;
+    private String description;
 
 
     @Given("Technician Raise a Fault")
@@ -44,14 +38,15 @@ public class DeferFaultStepDefinition {
         channel= channelDecider.findPlatform(dataTable);
         if (channel.equals("web"))  {
             raiseFaultWebService.raiseAFault(dataTable);
-            assertEquals("ABC", raiseFaultWebService.assertRaisedFaultFromTurn());
         }
-        if (channel.equals("mobile")){
-            raiseFaultNativeService.raiseAFault(dataTable);
+        else if (channel.equals("mobile")){
+
+            System.out.println("For mobile implementation");
         }
         else{
             Response response = raiseFaultAPI.sendRaiseFaultRequest(dataTable);
         }
+
 
     }
 
@@ -68,11 +63,29 @@ public class DeferFaultStepDefinition {
         if (channel.equals("web"))  {
             webservices.routeToLoginDetailsPage(dataTable);
         }
-        if (channel.equals("mobile")){
-            nativeServices.routeToLoginDetailsPage(dataTable);
+        else if (channel.equals("mobile")){
+
+            System.out.println("For mobile implementation");
         }
         else{
             System.out.println("use API path");
         }
+    }
+
+    @Then("Technician Verify The Raised Fault")
+    public void technicianVerifyTheRaisedFault(DataTable dataTable) {
+        channel= channelDecider.findPlatform(dataTable);
+        if (channel.equals("web"))  {
+            description = raiseFaultWebService.routeFaultDetails(dataTable);
+            assertEquals("DESC01", description);
+        }
+        else if (channel.equals("mobile")){
+
+            System.out.println("For mobile implementation");
+        }
+        else{
+            System.out.println("use API path");
+        }
+
     }
 }
