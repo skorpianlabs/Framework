@@ -15,7 +15,7 @@ public class ChannelDecider extends BaseService {
     private static final Logger logger = LogManager.getLogger(ChannelDecider.class);
 
     public ChannelDecider() {
-        super(DriverProvider.getChromeDriver());
+        super(DriverProvider.getWEBDriver());
     }
 
     public String findPlatform(DataTable dataTable) {

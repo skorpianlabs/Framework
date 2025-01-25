@@ -13,7 +13,7 @@ public class WebServices extends BaseService {
     String description;
 
     public WebServices() {
-        super(DriverProvider.getChromeDriver());
+        super(DriverProvider.getWEBDriver());
         setupPageFactory();
     }
 

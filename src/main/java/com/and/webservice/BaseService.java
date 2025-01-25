@@ -15,7 +15,7 @@ public  class BaseService {
 
     // Constructor to initialize the WebDriver
     public BaseService(WebDriver driver) {
-        this.driver = DriverProvider.getChromeDriver() ;
+        this.driver = DriverProvider.getWEBDriver() ;
     }
 
     // Setup the PageObjectFactory
