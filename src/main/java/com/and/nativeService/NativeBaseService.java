@@ -14,7 +14,7 @@ public class NativeBaseService {
 
     protected void setupNativePageFactory() {
         if (nativePageObjectFactory == null) {
-            this.driver = NativeDriverProvider.getIosDriver();
+          //  this.driver = NativeDriverProvider.getIosDriver();
             this.nativePageObjectFactory = new NativePageObjectFactory(driver);
         }
     }

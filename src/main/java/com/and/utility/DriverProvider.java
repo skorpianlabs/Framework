@@ -45,12 +45,12 @@ public class DriverProvider {
             chromeDriverMap.put(threadId, chromeDriver);
         }
 
-        if (!iOSDriverMap.containsKey(threadId)) {
+        /*if (!iOSDriverMap.containsKey(threadId)) {
             IOSDriver iOSDriver = new IOSDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities.getCapabilities());
 
             iOSDriverMap.put(threadId, iOSDriver);
 
-        }
+        }*/
 
         if (dbConnectionManger == null) {
             dbConnectionManger = new DBConnectionManger("src/test/java/database.properties");
