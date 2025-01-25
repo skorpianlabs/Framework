@@ -30,6 +30,7 @@ public class LoginPage extends BasePage {
 
     public void clickOnAurenaLink() {
         logger.info(STARTED + getCurrentMethodName());
+        waitForVisibility(aurenaLink);
         aurenaLink.click();
         logger.info(ENDED + getCurrentMethodName());
     }

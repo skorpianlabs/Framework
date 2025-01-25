@@ -31,21 +31,21 @@ public class BasePage {
                 .ignoring(NoSuchElementException.class);// Handle the exception
     }
     // Wait until an element is visible
-    public WebElement waitForVisibility(By locator) {
-        return fluentWait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+    public WebElement waitForVisibility(WebElement element) {
+        return fluentWait.until(ExpectedConditions.visibilityOf(element));
     }
 
     // Wait until an element is clickable
-    public WebElement waitForElementToBeClickable(By locator) {
-        return fluentWait.until(ExpectedConditions.elementToBeClickable(locator));
+    public WebElement waitForElementToBeClickable(WebElement element) {
+        return fluentWait.until(ExpectedConditions.elementToBeClickable(element));
     };
-    public WebElement miniWaitForVisibility(By locator) {
-        return fluentWaitMIni.until(ExpectedConditions.visibilityOfElementLocated(locator));
+    public WebElement miniWaitForVisibility(WebElement element) {
+        return fluentWaitMIni.until(ExpectedConditions.visibilityOf(element));
     }
 
     // Wait until an element is clickable
-    public WebElement miniWwaitForElementToBeClickable(By locator) {
-        return fluentWaitMIni.until(ExpectedConditions.elementToBeClickable(locator));
+    public WebElement miniWwaitForElementToBeClickable(WebElement element) {
+        return fluentWaitMIni.until(ExpectedConditions.elementToBeClickable(element));
     };
 
     /**
