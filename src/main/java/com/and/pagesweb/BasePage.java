@@ -15,7 +15,7 @@ import java.time.Duration;
 public class BasePage {
 
     public final Logger logger = LogManager.getLogger(BasePage.class);
-    protected WebDriver driver = DriverProvider.getChromeDriver();
+    protected WebDriver driver = DriverProvider.getWEBDriver();
     protected FluentWait<WebDriver> fluentWait;
     protected FluentWait<WebDriver> fluentWaitMIni;
 

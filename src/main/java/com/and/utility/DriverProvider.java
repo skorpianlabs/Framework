@@ -10,19 +10,23 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 public class DriverProvider {
 
     // Map to store the WebDriver instances for each thread
-    private static final Map<Long, WebDriver> chromeDriverMap = new HashMap<>();
+    private static final Map<Long, WebDriver> DriverMap = new HashMap<>();
     private static final Map<Long, WebDriver> mobileDriverMap = new HashMap<>();
     private static final Map<Long, Connection> connectionMap = new HashMap<>();
     private static final Map<Long, IOSDriver> iOSDriverMap = new HashMap<>();
@@ -37,12 +41,49 @@ public class DriverProvider {
         long threadId = Thread.currentThread().getId();
 
         // Initialize ChromeDriver if not already initialized
-        if (!chromeDriverMap.containsKey(threadId)) {
-            WebDriver chromeDriver = new ChromeDriver();
-            chromeDriver.get("https://ifsmxmm24r2dev3cmb.rnd.ifsdevworld.com/");
-            chromeDriver.manage().window().maximize();
-            chromeDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-            chromeDriverMap.put(threadId, chromeDriver);
+        if (!DriverMap.containsKey(threadId)) {
+            // Properties file path
+            String propertiesFilePath = "src/test/java/config.properties";
+            Properties properties = new Properties();
+
+            // Load the properties file inside the if block
+            try (FileInputStream fis = new FileInputStream(propertiesFilePath)) {
+                properties.load(fis);
+            } catch (IOException e) {
+                e.printStackTrace();
+                throw new RuntimeException("Failed to load properties file", e);
+            }
+
+            WebDriver webDriver = null;
+
+            // Get the browser type from the properties file
+            String browser = properties.getProperty("webdriver.browser", "chrome").toLowerCase();
+
+            // Initialize WebDriver based on the browser type
+            switch (browser) {
+                case "chrome":
+                    webDriver = new ChromeDriver();
+                    break;
+                case "firefox":
+                    webDriver = new FirefoxDriver();
+                    break;
+                case "edge":
+                    webDriver = new EdgeDriver();
+                    break;
+                default:
+                    throw new IllegalArgumentException("Unsupported browser type: " + browser);
+            }
+
+            // Get the URL from properties file (the environment URL)
+            String url = properties.getProperty("webdriver.url", "https://default-url.com");
+
+            // Navigate to the environment URL
+            webDriver.get(url);
+            webDriver.manage().window().maximize();
+            webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+
+            // Store the WebDriver instance in the DriverMap
+            DriverMap.put(threadId, webDriver);
         }
 
         /*if (!iOSDriverMap.containsKey(threadId)) {
@@ -69,13 +110,8 @@ public class DriverProvider {
     }
 
     // Method to get ChromeDriver for the current thread
-    public static WebDriver getChromeDriver() {
-        return chromeDriverMap.get(Thread.currentThread().getId());
-    }
-
-    // Method to get EdgeDriver for the current thread
-    public static WebDriver getEdgeDriver() {
-        return mobileDriverMap.get(Thread.currentThread().getId());
+    public static WebDriver getWEBDriver() {
+        return DriverMap.get(Thread.currentThread().getId());
     }
 
     public static Connection getConnection() {
@@ -88,14 +124,14 @@ public class DriverProvider {
         long threadId = Thread.currentThread().getId();
 
         // Quit ChromeDriver if it exists
-        WebDriver chromeDriver = chromeDriverMap.get(threadId);
-        if (chromeDriver != null) {
+        WebDriver webDriverDriver = DriverMap.get(threadId);
+        if (webDriverDriver != null) {
             if (scenario.isFailed()) {
-                final byte[] scrnShot = ((TakesScreenshot) chromeDriver).getScreenshotAs(OutputType.BYTES);
+                final byte[] scrnShot = ((TakesScreenshot) webDriverDriver).getScreenshotAs(OutputType.BYTES);
                 scenario.attach(scrnShot, "image/png", scenario.getName());
             }
-            chromeDriver.quit();
-            chromeDriverMap.remove(threadId);
+            webDriverDriver.quit();
+            DriverMap.remove(threadId);
         }
 
         // Quit IOSDriver if it exists
@@ -107,13 +143,6 @@ public class DriverProvider {
             }
             iosDriver.quit();
             iOSDriverMap.remove(threadId);
-        }
-
-        // Quit EdgeDriver if it exists
-        WebDriver edgeDriver = mobileDriverMap.get(threadId);
-        if (edgeDriver != null) {
-            edgeDriver.quit();
-            mobileDriverMap.remove(threadId);
         }
         // Close the database connection if it exists
         Connection connection = connectionMap.get(threadId);
