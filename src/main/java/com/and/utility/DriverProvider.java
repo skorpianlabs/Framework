@@ -16,6 +16,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.Duration;
@@ -86,12 +87,12 @@ public class DriverProvider {
             DriverMap.put(threadId, webDriver);
         }
 
-        /*if (!iOSDriverMap.containsKey(threadId)) {
+        if (!iOSDriverMap.containsKey(threadId)) {
             IOSDriver iOSDriver = new IOSDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities.getCapabilities());
 
             iOSDriverMap.put(threadId, iOSDriver);
 
-        }*/
+        }
 
         if (dbConnectionManger == null) {
             dbConnectionManger = new DBConnectionManger("src/test/java/database.properties");
@@ -112,6 +113,11 @@ public class DriverProvider {
     // Method to get ChromeDriver for the current thread
     public static WebDriver getWEBDriver() {
         return DriverMap.get(Thread.currentThread().getId());
+    }
+
+    // Method to get IOSDriver for the current thread
+    public static IOSDriver getIOSDriver() {
+        return iOSDriverMap.get(Thread.currentThread().getId());
     }
 
     public static Connection getConnection() {
