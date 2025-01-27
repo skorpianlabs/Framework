@@ -12,30 +12,43 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
-        <java.version>1.8</java.version>
-        <restassuredVersion>5.3.0</restassuredVersion>
+        <java.version>21</java.version>
+
+        <!-- Dependency Versions -->
+        <restassuredVersion>5.4.0</restassuredVersion>
         <testngVersion>7.7.0</testngVersion>
         <gsonVersion>2.10</gsonVersion>
         <extentVersion>5.0.9</extentVersion>
         <datafakerVersion>1.8.0</datafakerVersion>
         <apacheCommonLangVersion>3.12.0</apacheCommonLangVersion>
         <javersVersion>6.12.0</javersVersion>
+        <junitBomVersion>5.11.4</junitBomVersion>
+        <cucumberBomVersion>7.20.1</cucumberBomVersion>
+        <seleniumVersion>4.17.0</seleniumVersion>
+        <guiceVersion>5.0.1</guiceVersion>
+        <commonsIoVersion>2.17.0</commonsIoVersion>
+        <log4jVersion>2.22.0</log4jVersion>
+        <jacksonVersion>2.18.0</jacksonVersion>
+        <ojdbcVersion>23.5.0.24.07</ojdbcVersion>
+        <hikariCPVersion>6.2.1</hikariCPVersion>
+        <appiumClientVersion>9.0.0</appiumClientVersion>
+        <mavenCompilerPluginVersion>3.13.0</mavenCompilerPluginVersion>
+        <mavenSurefirePluginVersion>2.22.0</mavenSurefirePluginVersion>
     </properties>
-
 
     <dependencyManagement>
         <dependencies>
             <dependency>
                 <groupId>org.junit</groupId>
                 <artifactId>junit-bom</artifactId>
-                <version>5.11.4</version>
+                <version>${junitBomVersion}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
             <dependency>
                 <groupId>io.cucumber</groupId>
                 <artifactId>cucumber-bom</artifactId>
-                <version>7.20.1</version>
+                <version>${cucumberBomVersion}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -47,116 +60,98 @@
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-java</artifactId>
         </dependency>
-
         <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-junit-platform-engine</artifactId>
-
         </dependency>
         <dependency>
             <groupId>org.junit.platform</groupId>
             <artifactId>junit-platform-suite</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
         </dependency>
-
-        <!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java -->
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
-            <version>4.17.0</version>
+            <version>${seleniumVersion}</version>
         </dependency>
-        <dependency>
-            <groupId>io.rest-assured</groupId>
-            <artifactId>rest-assured</artifactId>
-            <version>5.4.0</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-guice -->
-        <dependency>
-            <groupId>io.cucumber</groupId>
-            <artifactId>cucumber-guice</artifactId>
-            <version>6.8.1</version>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/com.google.inject/guice -->
-        <dependency>
-            <groupId>com.google.inject</groupId>
-            <artifactId>guice</artifactId>
-            <version>5.0.1</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
-        <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-            <version>2.17.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-core</artifactId>
-            <version>2.22.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-api</artifactId>
-            <version>2.22.0</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/io.rest-assured/rest-assured -->
         <dependency>
             <groupId>io.rest-assured</groupId>
             <artifactId>rest-assured</artifactId>
             <version>${restassuredVersion}</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-guice</artifactId>
+            <version>${cucumberBomVersion}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.inject</groupId>
+            <artifactId>guice</artifactId>
+            <version>${guiceVersion}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>${commonsIoVersion}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>${log4jVersion}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>${log4jVersion}</version>
+        </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
-            <version>2.18.0</version>
+            <version>${jacksonVersion}</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.18.0</version> <!-- Ensure this version matches your jackson-core version -->
+            <version>${jacksonVersion}</version>
         </dependency>
         <dependency>
             <groupId>com.oracle.database.jdbc</groupId>
             <artifactId>ojdbc8</artifactId>
-            <version>23.5.0.24.07</version>
+            <version>${ojdbcVersion}</version>
         </dependency>
         <dependency>
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
-            <version>6.2.1</version>
+            <version>${hikariCPVersion}</version>
         </dependency>
         <dependency>
             <groupId>io.appium</groupId>
             <artifactId>java-client</artifactId>
-            <version>9.0.0</version>
+            <version>${appiumClientVersion}</version>
         </dependency>
-
     </dependencies>
 
     <build>
-        <sourceDirectory>src/main/java</sourceDirectory> <!-- Main source code -->
-        <testSourceDirectory>src/test/java</testSourceDirectory> <!-- Test source code -->
-
+        <sourceDirectory>src/main/java</sourceDirectory>
+        <testSourceDirectory>src/test/java</testSourceDirectory>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.13.0</version>
+                <version>${mavenCompilerPluginVersion}</version>
                 <configuration>
-                    <encoding>UTF-8</encoding>
-                    <source>9</source>
-                    <target>9</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.22.0</version>
+                <version>${mavenSurefirePluginVersion}</version>
                 <configuration>
                     <parallel>methods</parallel>
                     <useUnlimitedThreads>true</useUnlimitedThreads>
