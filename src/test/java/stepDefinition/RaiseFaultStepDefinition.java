@@ -3,6 +3,7 @@ package stepDefinition;
 import com.and.apiService.RaiseFaultAPI;
 import com.and.nativeService.NativeServices;
 import com.and.nativeService.RaiseFaultNativeService;
+import io.cucumber.java.en.Then;
 import io.restassured.response.Response;
 import com.and.webservice.RaiseFaultWebService;
 import com.google.inject.Inject;
@@ -13,7 +14,7 @@ import com.and.webservice.ChannelDecider;
 import com.and.webservice.WebServices;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class DeferFaultStepDefinition {
+public class RaiseFaultStepDefinition {
 
     private WebDriver driver;
 
@@ -37,6 +38,8 @@ public class DeferFaultStepDefinition {
 
     private String channel;
 
+    private String description;
+
 
     @Given("Technician Raise a Fault")
     public void technicianRaiseAFault(DataTable dataTable) throws InterruptedException {
@@ -44,7 +47,6 @@ public class DeferFaultStepDefinition {
         channel= channelDecider.findPlatform(dataTable);
         if (channel.equals("web"))  {
             raiseFaultWebService.raiseAFault(dataTable);
-            assertEquals("ABC", raiseFaultWebService.assertRaisedFaultFromTurn());
         }
         if (channel.equals("mobile")){
             raiseFaultNativeService.raiseAFault(dataTable);
@@ -52,6 +54,7 @@ public class DeferFaultStepDefinition {
         else{
             Response response = raiseFaultAPI.sendRaiseFaultRequest(dataTable);
         }
+
 
     }
 
@@ -74,5 +77,22 @@ public class DeferFaultStepDefinition {
         else{
             System.out.println("use API path");
         }
+    }
+
+    @Then("Technician Verify The Raised Fault")
+    public void technicianVerifyTheRaisedFault(DataTable dataTable) {
+        channel= channelDecider.findPlatform(dataTable);
+        if (channel.equals("web"))  {
+            description = raiseFaultWebService.routeFaultDetails(dataTable);
+            assertEquals("DESC01", description);
+        }
+        else if (channel.equals("mobile")){
+
+            System.out.println("For mobile implementation");
+        }
+        else{
+            System.out.println("use API path");
+        }
+
     }
 }

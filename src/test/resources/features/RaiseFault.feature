@@ -10,6 +10,14 @@ Feature: Login AS a Technician and Defer a Fault one
       | searchKey         | inputFieldText | channel | page |
       | My Aircraft Turns | P5-1524        | web     | turn |
 
+    Then Technician Verify The Raised Fault
+      | searchKey          | inputFieldText | channel | page  |
+      | Mobile Maintenance | P5-1524        | web     | lobby |
+
+
+
+
+
 
 
 

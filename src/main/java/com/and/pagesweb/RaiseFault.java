@@ -29,6 +29,9 @@ public class RaiseFault extends BasePage {
     @FindBy(xpath = "//button[@title='Raise Fault']")
     private WebElement raiseFaultButton;
 
+    @FindBy(id = "AircraftTurnDetails-fndToolbar-action-fndButton-AircraftTurnDetails_FaultSearchCommand-button")
+    private WebElement faultSearchButton;
+
     @FindBy(xpath = "//label[@title='Fault Source']/following::button//i")
     private WebElement faultSourceButton;
 
@@ -191,6 +194,17 @@ public class RaiseFault extends BasePage {
         logger.info(STARTED + getCurrentMethodName());
         faultCodeInputField.clear();
         faultCodeInputField.sendKeys(faultCodeText);
+        logger.info(ENDED + getCurrentMethodName());
+    }
+    public void clickButtonFaultSearch() {
+        logger.info(STARTED + getCurrentMethodName());
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            wait.until(ExpectedConditions.elementToBeClickable(faultSearchButton));
+            faultSearchButton.click();
+        } catch (Exception e) {
+            logger.error("An error occurred while clicking the 'Fault Search' button: " + e.getMessage());
+        }
         logger.info(ENDED + getCurrentMethodName());
     }
 
