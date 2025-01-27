@@ -13,16 +13,13 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
+import java.util.Optional;
 
 public class DriverProvider {
 
@@ -43,22 +40,13 @@ public class DriverProvider {
 
         // Initialize ChromeDriver if not already initialized
         if (!DriverMap.containsKey(threadId)) {
-            // Properties file path
-            String propertiesFilePath = "src/test/java/config.properties";
-            Properties properties = new Properties();
-
-            // Load the properties file inside the if block
-            try (FileInputStream fis = new FileInputStream(propertiesFilePath)) {
-                properties.load(fis);
-            } catch (IOException e) {
-                e.printStackTrace();
-                throw new RuntimeException("Failed to load properties file", e);
-            }
 
             WebDriver webDriver = null;
 
             // Get the browser type from the properties file
-            String browser = properties.getProperty("webdriver.browser", "chrome").toLowerCase();
+            String browser = Optional.ofNullable(PropertyManager.getInstance().getProperty("webdriver.browser"))
+                    .orElse("chrome")
+                    .toLowerCase();
 
             // Initialize WebDriver based on the browser type
             switch (browser) {
@@ -75,10 +63,9 @@ public class DriverProvider {
                     throw new IllegalArgumentException("Unsupported browser type: " + browser);
             }
 
-            // Get the URL from properties file (the environment URL)
-            String url = properties.getProperty("webdriver.url", "https://default-url.com");
+            // Get the initial URL from the properties file
+            String url = PropertyManager.getInstance().getProperty("webdriver.url");
 
-            // Navigate to the environment URL
             webDriver.get(url);
             webDriver.manage().window().maximize();
             webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
@@ -87,15 +74,15 @@ public class DriverProvider {
             DriverMap.put(threadId, webDriver);
         }
 
-        if (!iOSDriverMap.containsKey(threadId)) {
+        /*if (!iOSDriverMap.containsKey(threadId)) {
             IOSDriver iOSDriver = new IOSDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities.getCapabilities());
 
             iOSDriverMap.put(threadId, iOSDriver);
 
-        }
+        }*/
 
         if (dbConnectionManger == null) {
-            dbConnectionManger = new DBConnectionManger("src/test/java/database.properties");
+            dbConnectionManger = new DBConnectionManger("src/main/resources/properties/database.properties");
         }
 
         // Initialize the database connection if not already initialized for this thread

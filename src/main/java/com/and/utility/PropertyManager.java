@@ -13,7 +13,8 @@ public class PropertyManager {
     private static final List<String> PROPERTY_FILE_PATHS = List.of(
             "properties/RESTAPI.properties",
             "properties/login.properties",
-            "properties/database.properties"
+            "properties/database.properties",
+            "properties/config.properties"
     );
 
 
