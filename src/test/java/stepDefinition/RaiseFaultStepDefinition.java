@@ -1,6 +1,8 @@
 package stepDefinition;
 
-import com.and.apiservice.RaiseFaultAPI;
+import com.and.apiService.RaiseFaultAPI;
+import com.and.nativeService.NativeServices;
+import com.and.nativeService.RaiseFaultNativeService;
 import io.cucumber.java.en.Then;
 import io.restassured.response.Response;
 import com.and.webservice.RaiseFaultWebService;
@@ -20,6 +22,9 @@ public class RaiseFaultStepDefinition {
     protected WebServices webservices;
 
     @Inject
+    protected NativeServices nativeServices;
+
+    @Inject
     protected ChannelDecider channelDecider;
 
     @Inject
@@ -28,7 +33,11 @@ public class RaiseFaultStepDefinition {
     @Inject
     protected RaiseFaultAPI raiseFaultAPI;
 
+    @Inject
+    protected RaiseFaultNativeService raiseFaultNativeService;
+
     private String channel;
+
     private String description;
 
 
@@ -39,9 +48,8 @@ public class RaiseFaultStepDefinition {
         if (channel.equals("web"))  {
             raiseFaultWebService.raiseAFault(dataTable);
         }
-        else if (channel.equals("mobile")){
-
-            System.out.println("For mobile implementation");
+        if (channel.equals("mobile")){
+            raiseFaultNativeService.raiseAFault(dataTable);
         }
         else{
             Response response = raiseFaultAPI.sendRaiseFaultRequest(dataTable);
@@ -63,9 +71,8 @@ public class RaiseFaultStepDefinition {
         if (channel.equals("web"))  {
             webservices.routeToLoginDetailsPage(dataTable);
         }
-        else if (channel.equals("mobile")){
-
-            System.out.println("For mobile implementation");
+        if (channel.equals("mobile")){
+            nativeServices.routeToLoginDetailsPage(dataTable);
         }
         else{
             System.out.println("use API path");
