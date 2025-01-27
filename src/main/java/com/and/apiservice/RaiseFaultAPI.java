@@ -1,19 +1,17 @@
-package com.and.apiservice;
+package com.and.apiService;
 
 import com.and.PojoAPI.Fault;
+import com.and.utility.PropertyManager;
 import io.cucumber.datatable.DataTable;
-import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import static io.restassured.RestAssured.given;
 
 import java.util.List;
 import java.util.Map;
 
 public class RaiseFaultAPI extends BaseAPI {
 
-    private String accessToken;
-    String endpointRaiseFault = "FlmAircraftTurnsDetailsHandling.svc/RaiseFaultVirtualSet";
-    String endpointRaiseFaultService = "FlmAircraftTurnsDetailsHandling.svc/RaiseFaultService";
+    String endpointRaiseFault = "main/ifsapplications/projection/v1/FlmAircraftTurnsDetailsHandling.svc/RaiseFaultVirtualSet";
+    String endpointRaiseFaultService = "main/ifsapplications/projection/v1/FlmAircraftTurnsDetailsHandling.svc/RaiseFaultService";
     Response virtualResponse;
     Response serviceResponse;
 
@@ -21,8 +19,8 @@ public class RaiseFaultAPI extends BaseAPI {
     }
 
     public Response sendRaiseFaultRequest(DataTable dataTable) {
-        Response finalResponse = null;
-        accessToken = getAccesToken();
+
+        String accessToken = Token.generateBearerTokenWithPasswordCredential("alain", "alain");
 
         try {
             List<Map<String, String>> data = dataTable.asMaps(String.class, String.class);
@@ -41,27 +39,16 @@ public class RaiseFaultAPI extends BaseAPI {
                     fault.setPhaseOfFlightCode(faultDetailsMap.get("PhaseOfFlightCode"));
                     fault.setSubSystemId(Integer.parseInt(faultDetailsMap.get("SubSystemId")));
 
-
                     String jsonBody = convertObjectToJson(fault);
 
-                    String virtualUrl = BASE_URL + endpointRaiseFault;
-                    String serviceUrl = BASE_URL + endpointRaiseFaultService;
+                    String baseUrl = PropertyManager.getInstance().getProperty("BASE_URL");
 
-                    virtualResponse = given()
-                            .contentType(ContentType.JSON)
-                            .header("Authorization", "Bearer " + accessToken)
-                            .body(jsonBody)
-                            .when()
-                            .post(virtualUrl);
+                    String virtualUrl = baseUrl + endpointRaiseFault;
+                    String serviceUrl = baseUrl + endpointRaiseFaultService;
 
-                    serviceResponse = given()
-                            .contentType(ContentType.JSON)
-                            .header("Authorization", "Bearer " + accessToken)
-                            .body(jsonBody)
-                            .when()
-                            .post(serviceUrl);
+                    virtualResponse = Http.post(virtualUrl, jsonBody, accessToken);
+                    serviceResponse = Http.post(serviceUrl, jsonBody, accessToken);
 
-                    finalResponse = serviceResponse;
                 } catch (Exception e) {
                     System.err.println("Error processing row: " + faultDetailsMap);
                     e.printStackTrace();
@@ -72,6 +59,6 @@ public class RaiseFaultAPI extends BaseAPI {
             e.printStackTrace();
         }
 
-        return finalResponse;
+        return serviceResponse;
     }
 }

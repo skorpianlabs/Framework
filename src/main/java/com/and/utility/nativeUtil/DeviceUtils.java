@@ -13,7 +13,7 @@ public class DeviceUtils {
      */
     public static String getPropertyFile(String keyProperty) throws IOException {
         prop = new Properties();
-        FileInputStream fis = new FileInputStream(System.getProperty("user.dir") + "src/main/java/com/and/resources/capabilities.properties");
+        FileInputStream fis = new FileInputStream(System.getProperty("user.dir") + "src/main/resources/properties/capabilities.properties");
         prop.load(fis);
         return prop.getProperty(keyProperty);
     }

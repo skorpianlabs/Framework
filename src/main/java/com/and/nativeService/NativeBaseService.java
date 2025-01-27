@@ -1,6 +1,7 @@
 package com.and.nativeService;
 
 import com.and.constant.CommonConstant;
+import com.and.utility.DriverProvider;
 import com.and.utility.nativeUtil.NativePageObjectFactory;
 import io.appium.java_client.ios.IOSDriver;
 import org.apache.logging.log4j.LogManager;
@@ -14,7 +15,7 @@ public class NativeBaseService {
 
     protected void setupNativePageFactory() {
         if (nativePageObjectFactory == null) {
-            this.driver = NativeDriverProvider.getIosDriver();
+            this.driver = DriverProvider.getIOSDriver();
             this.nativePageObjectFactory = new NativePageObjectFactory(driver);
         }
     }
