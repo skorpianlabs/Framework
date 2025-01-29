@@ -4,7 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import com.and.utility.DriverProvider;
-import com.and.utility.WebPageObjectFactory;
+import com.and.factories.WebPageObjectFactory;
 
 public  class BaseService {
 

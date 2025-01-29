@@ -2,7 +2,7 @@ package com.and.nativeService;
 
 import com.and.constant.CommonConstant;
 import com.and.utility.DriverProvider;
-import com.and.utility.nativeUtil.NativePageObjectFactory;
+import com.and.factories.NativePageObjectFactory;
 import io.appium.java_client.ios.IOSDriver;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

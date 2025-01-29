@@ -1,4 +1,4 @@
-package com.and.utility.nativeUtil;
+package com.and.factories;
 
 import com.and.nativePages.*;
 import io.appium.java_client.ios.IOSDriver;
