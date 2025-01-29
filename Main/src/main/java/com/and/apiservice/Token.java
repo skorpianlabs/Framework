@@ -1,4 +1,4 @@
-package com.and.apiService;
+package com.and.apiservice;
 
 import com.and.utility.PropertyManager;
 import io.restassured.response.Response;

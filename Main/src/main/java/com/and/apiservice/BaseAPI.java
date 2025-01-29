@@ -1,4 +1,4 @@
-package com.and.apiService;
+package com.and.apiservice;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class BaseAPI {

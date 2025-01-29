@@ -2,16 +2,24 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>cucumber</groupId>
-    <artifactId>cucumber-java-skeleton</artifactId>
-    <version>0.0.1</version>
-    <packaging>jar</packaging>
-    <name>Cucumber-Java Skeleton</name>
+    <!-- Parent Project Information -->
+    <groupId>com.and</groupId>
+    <artifactId>parent-project</artifactId>
+    <version>1.0.0</version>
+    <packaging>pom</packaging>
+    <name>Parent Project</name>
 
+    <!-- Modules List -->
+    <modules>
+        <module>Main</module>
+        <module>Utility</module>
+    </modules>
+
+    <!-- Properties for versioning, compiler, and other configurations -->
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
         <java.version>21</java.version>
 
         <!-- Dependency Versions -->
@@ -36,6 +44,7 @@
         <mavenSurefirePluginVersion>2.22.0</mavenSurefirePluginVersion>
     </properties>
 
+    <!-- Shared Dependency Management -->
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -55,6 +64,7 @@
         </dependencies>
     </dependencyManagement>
 
+    <!-- Shared Dependencies for All Modules -->
     <dependencies>
         <dependency>
             <groupId>io.cucumber</groupId>
@@ -134,6 +144,7 @@
         </dependency>
     </dependencies>
 
+    <!-- Build Configuration -->
     <build>
         <sourceDirectory>src/main/java</sourceDirectory>
         <testSourceDirectory>src/test/java</testSourceDirectory>
@@ -159,4 +170,5 @@
             </plugin>
         </plugins>
     </build>
+
 </project>

@@ -1,4 +1,4 @@
-package com.and.apiService;
+package com.and.apiservice;
 
 import com.and.PojoAPI.Fault;
 import com.and.utility.PropertyManager;

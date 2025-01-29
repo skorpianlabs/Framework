@@ -1,4 +1,4 @@
-package com.and.apiService;
+package com.and.apiservice;
 
 import io.restassured.RestAssured;
 import io.restassured.response.Response;

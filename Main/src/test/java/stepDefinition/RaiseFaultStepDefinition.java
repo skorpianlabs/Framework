@@ -1,6 +1,6 @@
 package stepDefinition;
 
-import com.and.apiService.RaiseFaultAPI;
+import com.and.apiservice.RaiseFaultAPI;
 import com.and.nativeService.NativeServices;
 import com.and.nativeService.RaiseFaultNativeService;
 import io.cucumber.java.en.Then;
