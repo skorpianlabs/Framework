@@ -6,6 +6,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import static com.and.constant.CommonConstant.ENDED;
 import static com.and.constant.CommonConstant.STARTED;
+import static com.and.utility.DriverProvider.waitForVisibility;
 
 public class LoginPage extends BasePage {
 

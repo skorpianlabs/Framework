@@ -16,38 +16,6 @@ public class BasePage {
 
     public final Logger logger = LogManager.getLogger(BasePage.class);
     protected WebDriver driver = DriverProvider.getWEBDriver();
-    protected FluentWait<WebDriver> fluentWait;
-    protected FluentWait<WebDriver> fluentWaitMIni;
-
-    public BasePage(){
-        fluentWait = new FluentWait<>(driver)
-                .withTimeout(Duration.ofSeconds(30))
-                .pollingEvery(Duration.ofSeconds(5))
-                .ignoring(NoSuchElementException.class);
-
-        fluentWaitMIni = new FluentWait<>(driver)
-                .withTimeout(Duration.ofSeconds(8))
-                .pollingEvery(Duration.ofSeconds(2))
-                .ignoring(NoSuchElementException.class);// Handle the exception
-    }
-    // Wait until an element is visible
-    public WebElement waitForVisibility(WebElement element) {
-        return fluentWait.until(ExpectedConditions.visibilityOf(element));
-    }
-
-    // Wait until an element is clickable
-    public WebElement waitForElementToBeClickable(WebElement element) {
-        return fluentWait.until(ExpectedConditions.elementToBeClickable(element));
-    };
-    public WebElement miniWaitForVisibility(WebElement element) {
-        return fluentWaitMIni.until(ExpectedConditions.visibilityOf(element));
-    }
-
-    // Wait until an element is clickable
-    public WebElement miniWwaitForElementToBeClickable(WebElement element) {
-        return fluentWaitMIni.until(ExpectedConditions.elementToBeClickable(element));
-    };
-
     /**
      * Method for getting the current executing method name
      */

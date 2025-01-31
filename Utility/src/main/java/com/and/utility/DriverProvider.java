@@ -6,12 +6,12 @@ import io.appium.java_client.ios.IOSDriver;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
 
 import java.net.MalformedURLException;
 import java.sql.Connection;
@@ -28,6 +28,10 @@ public class DriverProvider {
     private static final Map<Long, WebDriver> mobileDriverMap = new HashMap<>();
     private static final Map<Long, Connection> connectionMap = new HashMap<>();
     private static final Map<Long, IOSDriver> iOSDriverMap = new HashMap<>();
+    private static final Map<Long, FluentWait<WebDriver>> fluentWaitMap = new HashMap<>();
+    private static final Map<Long, FluentWait<WebDriver>> fluentWaitMiniMap = new HashMap<>();
+    private static final Map<Long, FluentWait<WebDriver>> fluentWaitMaxMap = new HashMap<>();
+
     @Inject
     private static Capabilities capabilities;
     private static DBConnectionManger dbConnectionManger;
@@ -72,6 +76,26 @@ public class DriverProvider {
 
             // Store the WebDriver instance in the DriverMap
             DriverMap.put(threadId, webDriver);
+
+            // Initialize FluentWait objects for the current thread
+            FluentWait<WebDriver> fluentWait = new FluentWait<>(webDriver)
+                    .withTimeout(Duration.ofSeconds(30))
+                    .pollingEvery(Duration.ofSeconds(5))
+                    .ignoring(NoSuchElementException.class);
+
+            FluentWait<WebDriver> fluentWaitMini = new FluentWait<>(webDriver)
+                    .withTimeout(Duration.ofSeconds(8))
+                    .pollingEvery(Duration.ofSeconds(2))
+                    .ignoring(NoSuchElementException.class);
+
+            FluentWait<WebDriver> fluentWaitMax = new FluentWait<>(webDriver)
+                    .withTimeout(Duration.ofSeconds(59))
+                    .pollingEvery(Duration.ofSeconds(10))
+                    .ignoring(NoSuchElementException.class);
+
+            fluentWaitMap.put(threadId, fluentWait);
+            fluentWaitMiniMap.put(threadId, fluentWaitMini);
+            fluentWaitMaxMap.put(threadId, fluentWaitMax);
         }
 
         /*if (!iOSDriverMap.containsKey(threadId)) {
@@ -109,6 +133,21 @@ public class DriverProvider {
 
     public static Connection getConnection() {
         return connectionMap.get(Thread.currentThread().getId());
+    }
+
+    // Method to get FluentWait for the current thread
+    public static FluentWait<WebDriver> getFluentWait() {
+        return fluentWaitMap.get(Thread.currentThread().getId());
+    }
+
+    // Method to get Mini FluentWait for the current thread
+    public static FluentWait<WebDriver> getFluentWaitMini() {
+        return fluentWaitMiniMap.get(Thread.currentThread().getId());
+    }
+
+    // Method to get Max FluentWait for the current thread
+    public static FluentWait<WebDriver> getFluentWaitMax() {
+        return fluentWaitMaxMap.get(Thread.currentThread().getId());
     }
 
     // @After hook to quit both drivers after each scenario
@@ -149,6 +188,92 @@ public class DriverProvider {
             }
             connectionMap.remove(threadId);
         }
-
+        fluentWaitMap.remove(threadId);
+        fluentWaitMiniMap.remove(threadId);
+        fluentWaitMaxMap.remove(threadId);
     }
+    // Wait until an element is visible (default FluentWait)
+    public static WebElement waitForVisibility(WebElement element) {
+        return getFluentWait().until(ExpectedConditions.visibilityOf(element));
+    }
+
+    // Wait until an element is clickable (default FluentWait)
+    public static WebElement waitForElementToBeClickable(WebElement element) {
+        return getFluentWait().until(ExpectedConditions.elementToBeClickable(element));
+    }
+
+    // Mini wait until an element is visible
+    public static WebElement miniWaitForVisibility(WebElement element) {
+        return getFluentWaitMini().until(ExpectedConditions.visibilityOf(element));
+    }
+
+    // Max wait until an element is visible
+    public static WebElement maxWaitForVisibility(WebElement element) {
+        return getFluentWaitMax().until(ExpectedConditions.visibilityOf(element));
+    }
+
+    // Wait until an element is present in the DOM
+    public static WebElement waitForPresenceOfElementLocated(By locator) {
+        return getFluentWait().until(ExpectedConditions.presenceOfElementLocated(locator));
+    }
+
+    // Mini wait until an element is present in the DOM
+    public static WebElement miniWaitForPresenceOfElementLocated(By locator) {
+        return getFluentWaitMini().until(ExpectedConditions.presenceOfElementLocated(locator));
+    }
+
+    // Max wait until an element is present in the DOM
+    public static WebElement maxWaitForPresenceOfElementLocated(By locator) {
+        return getFluentWaitMax().until(ExpectedConditions.presenceOfElementLocated(locator));
+    }
+
+    // Wait until an element is invisible
+    public static Boolean waitForInvisibilityOf(WebElement element) {
+        return getFluentWait().until(ExpectedConditions.invisibilityOf(element));
+    }
+
+    // Mini wait until an element is invisible
+    public static Boolean miniWaitForInvisibilityOf(WebElement element) {
+        return getFluentWaitMini().until(ExpectedConditions.invisibilityOf(element));
+    }
+
+    // Max wait until an element is invisible
+    public static Boolean maxWaitForInvisibilityOf(WebElement element) {
+        return getFluentWaitMax().until(ExpectedConditions.invisibilityOf(element));
+    }
+
+    // Wait until an alert is present
+    public static Alert waitForAlert() {
+        return getFluentWait().until(ExpectedConditions.alertIsPresent());
+    }
+
+    // Mini wait until an alert is present
+    public static Alert miniWaitForAlert() {
+        return getFluentWaitMini().until(ExpectedConditions.alertIsPresent());
+    }
+
+    // Max wait until an alert is present
+    public static Alert maxWaitForAlert() {
+        return getFluentWaitMax().until(ExpectedConditions.alertIsPresent());
+    }
+    // Max wait: Wait until an element is clickable
+    public static WebElement maxWaitForElementToBeClickable(WebElement element) {
+        return getFluentWaitMax().until(ExpectedConditions.elementToBeClickable(element));
+    }
+
+    // Mini wait: Wait until an element is clickable
+    public static WebElement miniWaitForElementToBeClickable(WebElement element) {
+        return getFluentWaitMini().until(ExpectedConditions.elementToBeClickable(element));
+    }
+
+    // Max wait: Wait until an element is clickable (using By locator)
+    public static WebElement maxWaitForElementToBeClickable(By locator) {
+        return getFluentWaitMax().until(ExpectedConditions.elementToBeClickable(locator));
+    }
+
+    // Mini wait: Wait until an element is clickable (using By locator)
+    public static WebElement miniWaitForElementToBeClickable(By locator) {
+        return getFluentWaitMini().until(ExpectedConditions.elementToBeClickable(locator));
+    }
+
 }
