@@ -27,7 +27,7 @@ public class DBConnectionManger {
         String jdbcUrl = properties.getProperty("jdbc.url");
         String username = properties.getProperty("jdbc.username");
         String password = properties.getProperty("jdbc.password");
-        int maxPoolSize = Integer.parseInt(properties.getProperty("jdbc.maxPoolSize", "10"));
+        int maxPoolSize = Integer.parseInt(properties.getProperty("jdbc.maxPoolSize", "2"));
         int minIdle = Integer.parseInt(properties.getProperty("jdbc.minIdle", "5"));
         long idleTimeout = Long.parseLong(properties.getProperty("jdbc.idleTimeout", "30000"));
         long maxLifetime = Long.parseLong(properties.getProperty("jdbc.maxLifetime", "600000"));

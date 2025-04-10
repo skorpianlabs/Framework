@@ -26,4 +26,23 @@ public class DBCallExecuter {
         return null;
     }
 
+    public static  ResultSet executeQueryFromDB2(String query) {
+        Connection connection = DriverProvider.getConnection2();
+
+        if (connection != null) {
+            try {
+                // Create a PreparedStatement with the provided query
+                PreparedStatement preparedStatement = connection.prepareStatement(query);
+
+                return preparedStatement.executeQuery();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("Connection is not available.");
+        }
+
+        return null;
+    }
+
 }

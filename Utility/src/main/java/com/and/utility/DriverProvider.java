@@ -25,8 +25,8 @@ public class DriverProvider {
 
     // Map to store the WebDriver instances for each thread
     private static final Map<Long, WebDriver> DriverMap = new HashMap<>();
-    private static final Map<Long, WebDriver> mobileDriverMap = new HashMap<>();
     private static final Map<Long, Connection> connectionMap = new HashMap<>();
+    private static final Map<Long, Connection> connectionMap2 = new HashMap<>();
     private static final Map<Long, IOSDriver> iOSDriverMap = new HashMap<>();
     private static final Map<Long, FluentWait<WebDriver>> fluentWaitMap = new HashMap<>();
     private static final Map<Long, FluentWait<WebDriver>> fluentWaitMiniMap = new HashMap<>();
@@ -35,6 +35,7 @@ public class DriverProvider {
     @Inject
     private static Capabilities capabilities;
     private static DBConnectionManger dbConnectionManger;
+    private static DBConnectionManger dbConnectionManger2;
 
     // @Before hook to initialize both ChromeDriver and EdgeDriver for each thread
     @Before
@@ -80,12 +81,12 @@ public class DriverProvider {
             // Initialize FluentWait objects for the current thread
             FluentWait<WebDriver> fluentWait = new FluentWait<>(webDriver)
                     .withTimeout(Duration.ofSeconds(30))
-                    .pollingEvery(Duration.ofSeconds(5))
+                    .pollingEvery(Duration.ofSeconds(1))
                     .ignoring(NoSuchElementException.class);
 
             FluentWait<WebDriver> fluentWaitMini = new FluentWait<>(webDriver)
                     .withTimeout(Duration.ofSeconds(8))
-                    .pollingEvery(Duration.ofSeconds(2))
+                    .pollingEvery(Duration.ofSeconds(1))
                     .ignoring(NoSuchElementException.class);
 
             FluentWait<WebDriver> fluentWaitMax = new FluentWait<>(webDriver)
@@ -98,30 +99,35 @@ public class DriverProvider {
             fluentWaitMaxMap.put(threadId, fluentWaitMax);
         }
 
-        /*if (!iOSDriverMap.containsKey(threadId)) {
-            IOSDriver iOSDriver = new IOSDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities.getCapabilities());
-
-            iOSDriverMap.put(threadId, iOSDriver);
-
-        }*/
-
+        // Initialize the database connection if not already initialized for this thread
         if (dbConnectionManger == null) {
             dbConnectionManger = new DBConnectionManger("src/main/resources/properties/database.properties");
+            dbConnectionManger2 = new DBConnectionManger("src/main/resources/properties/database2.properties");
         }
 
-        // Initialize the database connection if not already initialized for this thread
         if (!connectionMap.containsKey(threadId)) {
             try {
                 Connection connection = dbConnectionManger.getConnection();
                 connectionMap.put(threadId, connection);
             } catch (SQLException e) {
                 e.printStackTrace();
-                throw new RuntimeException("Failed to get database connection for thread " + threadId, e);
+                throw new RuntimeException("Failed to get database connection1 for thread " + threadId, e);
+            }
+        }
+
+        // Initialize the second database connection if not already initialized for this thread
+        if (!connectionMap2.containsKey(threadId)) {
+            try {
+                Connection connection2 = dbConnectionManger2.getConnection();
+                connectionMap2.put(threadId, connection2);
+            } catch (SQLException e) {
+                e.printStackTrace();
+                throw new RuntimeException("Failed to get database connection2 for thread " + threadId, e);
             }
         }
     }
 
-    // Method to get ChromeDriver for the current thread
+    // Method to get WebDriver for the current thread
     public static WebDriver getWEBDriver() {
         return DriverMap.get(Thread.currentThread().getId());
     }
@@ -131,8 +137,14 @@ public class DriverProvider {
         return iOSDriverMap.get(Thread.currentThread().getId());
     }
 
+    // Method to get database connection 1
     public static Connection getConnection() {
         return connectionMap.get(Thread.currentThread().getId());
+    }
+
+    // Method to get database connection 2
+    public static Connection getConnection2() {
+        return connectionMap2.get(Thread.currentThread().getId());
     }
 
     // Method to get FluentWait for the current thread
@@ -176,6 +188,7 @@ public class DriverProvider {
             iosDriver.quit();
             iOSDriverMap.remove(threadId);
         }
+
         // Close the database connection if it exists
         Connection connection = connectionMap.get(threadId);
         if (connection != null) {
@@ -188,10 +201,25 @@ public class DriverProvider {
             }
             connectionMap.remove(threadId);
         }
+
+        // Close the second database connection if it exists
+        Connection connection2 = connectionMap2.get(threadId);
+        if (connection2 != null) {
+            try {
+                if (!connection2.isClosed()) {
+                    connection2.close(); // Return the connection to the pool
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            connectionMap2.remove(threadId);
+        }
+
         fluentWaitMap.remove(threadId);
         fluentWaitMiniMap.remove(threadId);
         fluentWaitMaxMap.remove(threadId);
     }
+
     // Wait until an element is visible (default FluentWait)
     public static WebElement waitForVisibility(WebElement element) {
         return getFluentWait().until(ExpectedConditions.visibilityOf(element));
@@ -256,6 +284,7 @@ public class DriverProvider {
     public static Alert maxWaitForAlert() {
         return getFluentWaitMax().until(ExpectedConditions.alertIsPresent());
     }
+
     // Max wait: Wait until an element is clickable
     public static WebElement maxWaitForElementToBeClickable(WebElement element) {
         return getFluentWaitMax().until(ExpectedConditions.elementToBeClickable(element));
@@ -275,5 +304,4 @@ public class DriverProvider {
     public static WebElement miniWaitForElementToBeClickable(By locator) {
         return getFluentWaitMini().until(ExpectedConditions.elementToBeClickable(locator));
     }
-
 }
