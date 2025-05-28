@@ -20,7 +20,7 @@ public class RaiseFaultAPI extends BaseAPI {
 
     public Response sendRaiseFaultRequest(DataTable dataTable) {
 
-        String accessToken = Token.generateBearerTokenWithPasswordCredential("alain", "alain");
+        String accessToken = Token_old.generateBearerTokenWithPasswordCredential("alain", "alain");
 
         try {
             List<Map<String, String>> data = dataTable.asMaps(String.class, String.class);
@@ -46,8 +46,8 @@ public class RaiseFaultAPI extends BaseAPI {
                     String virtualUrl = baseUrl + endpointRaiseFault;
                     String serviceUrl = baseUrl + endpointRaiseFaultService;
 
-                    virtualResponse = Http.post(virtualUrl, jsonBody, accessToken);
-                    serviceResponse = Http.post(serviceUrl, jsonBody, accessToken);
+                    virtualResponse = Http_old.post(virtualUrl, jsonBody, accessToken);
+                    serviceResponse = Http_old.post(serviceUrl, jsonBody, accessToken);
 
                 } catch (Exception e) {
                     System.err.println("Error processing row: " + faultDetailsMap);

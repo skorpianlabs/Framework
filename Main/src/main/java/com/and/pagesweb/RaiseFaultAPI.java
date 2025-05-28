@@ -37,7 +37,7 @@ public class RaiseFaultAPI {
 
         // Extract the access token from the response
         String accessToken = tokenResponse.jsonPath().getString("access_token");
-        System.out.println("Access Token: " + accessToken);
+        System.out.println("Access Token_old: " + accessToken);
 
         // Now use this token to make the RaiseFault request
 

@@ -5,12 +5,11 @@ import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
 import java.util.Map;
-import java.util.function.Supplier;
 
 /**
- * Http class to send HTTP requests using Rest Assured
+ * Http_old class to send HTTP requests using Rest Assured
  */
-public class Http {
+public class Http_old {
 
     /**
      * Sends a GET request to the specified URL.

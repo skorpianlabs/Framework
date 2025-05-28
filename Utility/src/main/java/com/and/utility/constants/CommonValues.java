@@ -1,0 +1,42 @@
+package com.and.utility.constants;
+
+public class CommonValues {
+
+        public static final String RELEASE_APP_TITLE = "IFS Maintenance for Aviation";
+        public static final String DEV_APP_TITLE = "IFS Mobile App";
+        public static final String FAULT_SEARCH = "Fault Search";
+        public static final String SHOW_MORE_BTN = "Show more";
+        public static final String RELEASE_APP_BUNDLE_ID = "com.ifs.cloud.FLMaint.InHouse";
+        public static final String DEV_APP_BUNDLE_ID = "com.IFSWorld.IBSTest.InHouse";
+        public static final String CONTINUE = "Continue";
+        public static final String USER_NAME = "Username";
+        public static final String PASSWORD = "Password";
+        public static final String MY_AIRCRAFT_TURNS = "My Aircraft Turns";
+        public static final String DISCONNECT = "Disconnect";
+        public static final String ELEMENT_NOT_FOUND = "Unable to find element: ";
+        public static final String ELEMENT_NOT_CLICKABLE = "Unable to click element: ";
+        public static final String CONNECTION_FAILED = "Unable to connect to mobile device";
+        public static final String TEST_PASS = "Test Passed";
+        public static final String TEST_FAIL = "Test Failed";
+        public static final String RECORD_NOT_FOUND = "Search value not found";
+        public static final String COMPLETED = "Completed";
+        public static final String XPATH_NOT_FOUND = "Xpath is not found ";
+        public static final String INITMSG = "App Initialization In Progress for ";
+        public static final String RELEASED = "Released";
+        public static final String VALUE_ATTR = "value";
+        public static final String YES = "Yes";
+        public static final String NO = "No";
+        public static final String TRUE = "true";
+        public static final String CURRENT_TIME_ZONE = "IST";
+        public static final String UTC_TIME_ZONE = "UTC";
+        public static final String STARTED = "Started: ";
+        public static final String ENDED = "Ended: ";
+        public static final String FIND_INVENTORY = "Find Inventory";
+        public static final String INVENTORY_SEARCH = "Inventory Search";
+        public static final String NEW = "New";
+        public static final String EXISITNG = "Already Exists";
+        public static final String BATCH = "BATCH";
+        public static final String ONLINEMODE = "online";
+        public static final String environment = "https://ifsmxmm24r2bntcmb.rnd.ifsdevworld.com";
+
+}

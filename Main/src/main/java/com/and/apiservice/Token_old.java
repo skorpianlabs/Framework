@@ -6,9 +6,9 @@ import io.restassured.response.Response;
 import static io.restassured.RestAssured.given;
 
 /**
- * Token class to generate bearer token for service user
+ * Token_old class to generate bearer token for service user
  */
-public class Token {
+public class Token_old {
 
     /**
      * Generates a Bearer token using the client credentials grant type.
@@ -33,7 +33,7 @@ public class Token {
 
             String accessToken = response.jsonPath().getString("access_token");
 
-            System.out.println("Access Token: " + accessToken);
+            System.out.println("Access Token_old: " + accessToken);
 
             return accessToken;
 
@@ -72,7 +72,7 @@ public class Token {
 
             String accessToken = response.jsonPath().getString("access_token");
 
-            System.out.println("Access Token: " + accessToken);
+            System.out.println("Access Token_old: " + accessToken);
 
             return accessToken;
 

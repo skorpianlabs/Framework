@@ -1,3 +1,4 @@
+
 Feature: Login AS a Technician and Defer a Fault one
 
   Background:
@@ -5,6 +6,7 @@ Feature: Login AS a Technician and Defer a Fault one
       | username | password | channel |
       | joha     | joha     | web     |
 
+  @api
   Scenario: Validate Defer Fault flow
     Given Technician Raise a Fault
       | searchKey         | inputFieldText | channel | page |
