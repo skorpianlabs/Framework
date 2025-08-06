@@ -41,9 +41,33 @@ public class DriverProvider {
     public void initializeDriver(Scenario scenario) throws MalformedURLException {
         if (!scenario.getSourceTagNames().contains("@api")) {
             initializeDriverIfNotApi();
+
         }
         else {
+            long threadId = Thread.currentThread().getId();
             System.out.println("Skipping WebDriver initialization for @api scenario: " + scenario.getName());
+            if (dbConnectionManger == null) {
+                dbConnectionManger = new DBConnectionManger("src/main/resources/properties/database.properties");
+                dbConnectionManger2 = new DBConnectionManger("src/main/resources/properties/database2.properties");
+            }
+
+            if (!connectionMap.containsKey(threadId)) {
+                try {
+                    connectionMap.put(threadId, dbConnectionManger.getConnection());
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    throw new RuntimeException("Failed to get database connection1 for thread " + threadId, e);
+                }
+            }
+
+            if (!connectionMap2.containsKey(threadId)) {
+                try {
+                    connectionMap2.put(threadId, dbConnectionManger2.getConnection());
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    throw new RuntimeException("Failed to get database connection2 for thread " + threadId, e);
+                }
+            }
         }
     }
 
