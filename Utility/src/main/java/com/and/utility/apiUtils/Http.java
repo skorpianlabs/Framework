@@ -32,6 +32,8 @@ public class Http {
     public static Response get(String url, String token) {
         return RestAssured.given()
                 .header("Authorization", "Bearer " + token)
+                .header("X-IFS-Maintenix-Trusted-Secret", "true")
+                .header("X-IFS-Maintenix-Trusted-Request-Origin", "true")
                 .get(url)
                 .then()
                 .extract()
@@ -49,6 +51,8 @@ public class Http {
         return RestAssured.given()
                 .header("Authorization", "Bearer " + token)
                 .header("Content-Type", "application/json; charset=utf-8")
+                .header("X-IFS-Maintenix-Trusted-Secret", "true")
+                .header("X-IFS-Maintenix-Trusted-Request-Origin", "true")
                 .body(payload)
                 .post(url)
                 .then()
@@ -69,6 +73,8 @@ public class Http {
                 .header("Authorization", "Bearer " + token)
                 .header("Content-Type", "application/vnd.ifs.amapi.v2+json")
                 .header("Accept", "application/vnd.ifs.amapi.v2+json")
+                .header("X-IFS-Maintenix-Trusted-Secret", "true")
+                .header("X-IFS-Maintenix-Trusted-Request-Origin", "true")
                 .body(payload);
 
         if (extraHeaders != null && !extraHeaders.isEmpty()) {
@@ -93,6 +99,8 @@ public class Http {
         return RestAssured.given()
                 .header("Authorization", "Bearer " + token)
                 .header("Content-Type", "application/json; charset=utf-8")
+                .header("X-IFS-Maintenix-Trusted-Secret", "true")
+                .header("X-IFS-Maintenix-Trusted-Request-Origin", "true")
                 .body(payload)
                 .put(url)
                 .then()
@@ -111,6 +119,8 @@ public class Http {
         return RestAssured.given()
                 .header("Authorization", "Bearer " + token)
                 .header("Content-Type", "application/json; charset=utf-8")
+                .header("X-IFS-Maintenix-Trusted-Secret", "true")
+                .header("X-IFS-Maintenix-Trusted-Request-Origin", "true")
                 .body(payload)
                 .patch(url)
                 .then()
@@ -128,6 +138,8 @@ public class Http {
     public static Response delete(String url, String token) {
         return RestAssured.given()
                 .header("Authorization", "Bearer " + token)
+                .header("X-IFS-Maintenix-Trusted-Secret", "true")
+                .header("X-IFS-Maintenix-Trusted-Request-Origin", "true")
                 .delete(url)
                 .then()
                 .extract()
@@ -197,6 +209,8 @@ public class Http {
         try {
             var request = given()
                     .header("Authorization", "Bearer " + Token.getToken())
+                    .header("X-IFS-Maintenix-Trusted-Secret", "true")
+                    .header("X-IFS-Maintenix-Trusted-Request-Origin", "true")
                     .contentType("application/json");
 
             if (body != null) {
