@@ -35,7 +35,7 @@ public class Token {
             String secretKey = PropertyManager.getInstance().getProperty("SECRET");
             String tokenUrl = PropertyManager.getInstance().getProperty("TOKEN_URL");
 
-            Response response = given().auth().preemptive().basic(clientId, secretKey).contentType("application/x-www-form-urlencoded")
+            Response response = given().auth().preemptive().basic(clientId, secretKey).contentType(CONTENT_TYPE)
                     .formParam("grant_type", "client_credentials")
                     .formParam("scope", "openid")
                     .when()
@@ -72,7 +72,7 @@ public class Token {
 
             Response response = given()
                     .auth().preemptive().basic(clientId, secretKey)
-                    .contentType("application/x-www-form-urlencoded")
+                    .contentType(CONTENT_TYPE)
                     .formParam("grant_type", "password")
                     .formParam("username", username)
                     .formParam("password", password)
