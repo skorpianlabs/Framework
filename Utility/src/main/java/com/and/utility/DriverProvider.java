@@ -43,7 +43,7 @@ public class DriverProvider {
     @Before(order = 0)
     public void initializeDriver(Scenario scenario) throws MalformedURLException {
 
-        if (  (scenario.getSourceTagNames().contains("@api"))) {
+        if (scenario.getSourceTagNames().contains("@api")) {
             initDbConnections();
             return;
         }
@@ -189,7 +189,6 @@ public class DriverProvider {
 
             DriverMap.put(threadId, webDriver);
 
-            // Bind waits to the web driver (kept consistent for shared wait helpers)
             fluentWaitMap.put(threadId, new FluentWait<>(webDriver)
                     .withTimeout(Duration.ofSeconds(30))
                     .pollingEvery(Duration.ofSeconds(1))
@@ -206,27 +205,26 @@ public class DriverProvider {
                     .ignoring(NoSuchElementException.class));
         }
 
-        // iOS init
+        // iOS init (gracefully skip if capabilities cannot be loaded so web runs are not blocked)
         if (!iOSDriverMap.containsKey(threadId)) {
-            if (capabilities == null) {
-                try {
+            try {
+                if (capabilities == null) {
                     capabilities = new Capabilities();
-                } catch (IOException e) {
-                    throw new RuntimeException("Failed to load iOS capabilities", e);
                 }
+
+                String serverUrl = Optional.ofNullable(
+                        PropertyManager.getInstance().getProperty("appium.server.url")
+                ).orElse("http://127.0.0.1:4723/");
+
+                IOSDriver iosDriver = new IOSDriver(new URL(serverUrl), capabilities.getCapabilities());
+                iosDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+
+                iOSDriverMap.put(threadId, iosDriver);
+            } catch (IOException e) {
+                System.err.println("[WARN] Skipping iOS initialization in combined run: " + e.getMessage());
             }
-
-            String serverUrl = Optional.ofNullable(
-                    PropertyManager.getInstance().getProperty("appium.server.url")
-            ).orElse("http://127.0.0.1:4723/");
-
-            IOSDriver iosDriver = new IOSDriver(new URL(serverUrl), capabilities.getCapabilities());
-            iosDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-
-            iOSDriverMap.put(threadId, iosDriver);
         }
 
-        // DB connections
         initDbConnections();
     }
 
