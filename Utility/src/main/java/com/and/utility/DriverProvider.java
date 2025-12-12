@@ -48,6 +48,11 @@ public class DriverProvider {
             return;
         }
 
+        if (scenario.getSourceTagNames().contains("@db")) {
+            initDbConnections();
+            return;
+        }
+
         if (scenario.getSourceTagNames().contains("@web")) {
             initializeWebWithDb();
             return;
