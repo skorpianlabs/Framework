@@ -288,7 +288,8 @@ public class DriverProvider {
                 if (!connection.isClosed()) {
                     connection.close();
                 }
-            } catch (SQLException ignored) {
+            } catch (SQLException e) {
+                System.err.println("Failed to initialized connection 01: " + e.getMessage());
             }
             connectionMap.remove(threadId);
         }
@@ -299,7 +300,8 @@ public class DriverProvider {
                 if (!connection2.isClosed()) {
                     connection2.close();
                 }
-            } catch (SQLException ignored) {
+            } catch (SQLException e) {
+                System.err.println("Failed to initialized connection 02: " + e.getMessage());
             }
             connectionMap2.remove(threadId);
         }
